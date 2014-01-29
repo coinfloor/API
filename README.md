@@ -31,7 +31,7 @@ Authenticates as a user by signing a challenge.
 	}
 ```
 
-`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+`tag` is optional. If given and non-zero, it will be echoed in the reply.
 
 `user_id` is the numeric identifier of the user who is attempting to authenticate.
 
