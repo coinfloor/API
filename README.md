@@ -1,10 +1,5 @@
 API
 ===
-
-All C\+\+ structures are tightly packed (i.e., no implicit padding).
-
-All multi-byte integers in C\+\+ structures are serialized in native byte order (e.g., little-endian if the engine is running on x86_64).
-
 All values entered into or received from the trade engine need to have the quantity, price or total information scaled. Before placing trades or using the API, please read the [Scale.md File](Scale.md)
 
 ---
