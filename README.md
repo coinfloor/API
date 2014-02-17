@@ -569,7 +569,7 @@ An order was removed from the order book.
 
 ```json
 	{
-		"notice": "OrdersMatched",
+		"notice": "OrderClosed",
 		"id": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
