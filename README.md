@@ -407,7 +407,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "WatchTicker",
@@ -415,7 +415,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"counter": <integer>,
 		"watch": <boolean>
 	}
-
+```
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker feed the client is to be subscribed to or unsubscribed from.
@@ -424,7 +424,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -435,7 +435,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"high": <integer>,
 		"volume": <integer>
 	}
-
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `last`, `bid`, `ask`, `low`, `high`, and `volume` are present iff `watch` was **true** in the request.
@@ -450,13 +450,13 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `error_code` | `error_msg`
@@ -475,13 +475,13 @@ One of the authenticated user's balances has changed.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "BalanceChanged",
 		"asset": <integer>,
 		"balance": <integer>
 	}
-
+```
 `asset` is the asset code of the balance that changed.
 
 `balance` is the user's new available balance in the specified asset.
@@ -496,7 +496,7 @@ A new order has been opened.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrderOpened",
 		"id": <integer>,
@@ -506,7 +506,7 @@ A new order has been opened.
 		"price": <integer>,
 		"time": <integer>
 	}
-
+```
 `id` is the numeric identifier of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
@@ -527,7 +527,7 @@ Two orders matched, resulting in a trade.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrdersMatched",
 		"bid": <integer>,
@@ -545,7 +545,7 @@ Two orders matched, resulting in a trade.
 		"ask_base_fee": <integer>,
 		"ask_counter_fee": <integer>
 	}
-
+```
 `bid` and `ask` are the numeric identifiers of the bid and ask orders, respectively, that matched. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the orders.
@@ -572,7 +572,7 @@ An order was removed from the order book.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrdersMatched",
 		"id": <integer>,
@@ -581,7 +581,7 @@ An order was removed from the order book.
 		"quantity": <integer>,
 		"price": <integer>,
 	}
-
+```
 `id` is the numeric identifier of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
@@ -600,7 +600,7 @@ The ticker for an order book changed.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "TickerChanged",
 		"base": <integer>,
@@ -612,7 +612,7 @@ The ticker for an order book changed.
 		"high": <integer>,
 		"volume": <integer>
 	}
-
+```
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker changed.
 
 `last` is the price at which the last trade in the specified order book executed, scaled by a factor of 10000, or **null** if no such trade has yet executed. It is present only if it has changed since the previous notice in which it was present.
