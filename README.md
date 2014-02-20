@@ -339,6 +339,123 @@ Cancels an open order belonging to the authenticated user.
 
 ---
 
+
+# GetTradeVolume
+
+Retrieves the 30-day trailing trade volume for the authenticated user.
+
+**Authorization:** Any authenticated user may invoke this command.
+
+### Request
+
+	```json
+	{
+		"tag": <integer>,
+		"method": "GetTradeVolume",
+		"asset": <integer>
+	}
+
+`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+
+`asset` is the asset code of the asset whose trade volume is to be retrieved.
+
+### Success Reply
+
+	```json
+	{
+		"tag": <integer>,
+		"error_code": 0,
+		"volume": <integer>
+	}
+	```
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`volume` is the user's 30-day trailing trade volume in the specifed asset.
+
+### Error Reply
+
+	```json
+	{
+		"tag": <integer>,
+		"error_code": <integer>,
+		"error_msg": <string>
+	}
+	```
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`error_code` | `error_msg`
+-------------|------------------------------------------------------------------
+6            | "You are making information requests too rapidly."
+7            | "You are not authenticated."
+8            | *(varies)*
+
+---
+
+
+
+# EstimateMarketOrder
+
+Simulates the execution of a market order and returns the quantity and total that would have been traded. If you would like to receive the total estimate, provide quantity and to receive quantity This estimation does not take into account trading fees.
+
+**Authorization:** None required.
+
+### Request
+
+	```json
+	{
+		"tag": <integer>,
+		"method": "EstimateMarketOrder",
+		"base": <integer>,
+		"counter": <integer>,
+		"quantity": <integer>,
+		"total": <integer>
+	}
+	```
+`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+
+`base` and `counter` are the asset codes of the base and counter assets of the order.
+
+`quantity` is the amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `total` is supplied.
+
+`total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `quantity` is omitted.
+
+### Success Reply
+
+	```json
+	{
+		"tag": <integer>,
+		"error_code": 0,
+		"quantity": <integer>,
+		"total": <integer>
+	}
+	```
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`quantity` is the amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
+
+`total` is the amount of the counter asset that would have been traded if the market order really had been executed. It is always positive.
+
+### Error Reply
+
+	```json
+	{
+		"tag": <integer>,
+		"error_code": <integer>,
+		"error_msg": <string>
+	}
+	```
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`error_code` | `error_msg`
+-------------|------------------------------------------------------------------
+1            | "You specified an invalid asset pair."
+6            | "You are making information requests too rapidly."
+8            | "Quantity must not be zero."
+8            | "Total must not be zero."
+8            | "You must specify either quantity or total for a market order."
+8            | *(varies)*
+
+---
 # WatchOrders
 
 Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book.
@@ -524,7 +641,7 @@ Two orders matched, resulting in a trade.
 
 ```json
 	{
-		"notice": "OrdersMatched",
+		"notice": "OrderClosed",
 		"bid": <integer>,
 		"ask": <integer>,
 		"base": <integer>,
