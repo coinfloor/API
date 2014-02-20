@@ -348,39 +348,39 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ### Request
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"method": "GetTradeVolume",
 		"asset": <integer>
 	}
-
+```
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `asset` is the asset code of the asset whose trade volume is to be retrieved.
 
 ### Success Reply
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
 		"volume": <integer>
 	}
-	```
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `volume` is the user's 30-day trailing trade volume in the specifed asset.
 
 ### Error Reply
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-	```
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `error_code` | `error_msg`
@@ -401,7 +401,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Request
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"method": "EstimateMarketOrder",
@@ -410,7 +410,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 		"quantity": <integer>,
 		"total": <integer>
 	}
-	```
+```
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
@@ -421,14 +421,14 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Success Reply
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
 		"quantity": <integer>,
 		"total": <integer>
 	}
-	```
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `quantity` is the amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
@@ -437,13 +437,13 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Error Reply
 
-	```json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-	```
+```
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `error_code` | `error_msg`
