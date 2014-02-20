@@ -395,7 +395,7 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 # EstimateMarketOrder
 
-Simulates the execution of a market order and returns the quantity and total that would have been traded. If you would like to receive the total estimate, provide quantity and to receive quantity This estimation does not take into account trading fees.
+Simulates the execution of a market order and returns the quantity and total that would have been traded. If you would like to receive the total estimate, provide quantity and to receive quantity. This estimation does not take into account trading fees.
 
 **Authorization:** None required.
 
