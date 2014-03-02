@@ -458,7 +458,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 ---
 # WatchOrders
 
-Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book.
+Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book. When subscribing, up to 2000 orders from the top of the book are returned in the response.
 
 ### Request
 
@@ -641,7 +641,7 @@ Two orders matched, resulting in a trade.
 
 ```json
 	{
-		"notice": "OrderClosed",
+		"notice": "OrderMatched",
 		"bid": <integer>,
 		"ask": <integer>,
 		"base": <integer>,
