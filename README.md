@@ -1,6 +1,8 @@
 API
 ===
-All values entered into or received from the trade engine need to have the quantity, price or total information scaled. Before placing trades or using the API, please read the [Scale.md File](Scale.md)
+
+All quantities and prices transmitted via the API must have implicit scale factors applied.
+Before using the API, please read [SCALE.md](SCALE.md).
 
 ---
 
@@ -12,7 +14,7 @@ Authenticates as a user by signing a challenge.
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "Authenticate",
@@ -24,9 +26,8 @@ Authenticates as a user by signing a challenge.
 			<string>
 		]
 	}
-```
 
-`tag` is optional. If given and non-zero, it will be echoed in the reply.
+`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `user_id` is the numeric identifier of the user who is attempting to authenticate.
 
@@ -38,23 +39,22 @@ Authenticates as a user by signing a challenge.
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0
 	}
-```
+
 `tag` is present iff `tag` was given and non-zero in the request.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -76,19 +76,17 @@ Retrieves the available balances of the authenticated user.
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "GetBalances"
 	}
 
-```
-
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -97,10 +95,9 @@ Retrieves the available balances of the authenticated user.
 				"asset": <integer>,
 				"balance": <integer>
 			},
-		
+			⋮
 		]
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -110,14 +107,12 @@ Retrieves the available balances of the authenticated user.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -136,18 +131,17 @@ Retrieves the open orders of the authenticated user.
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "GetOrders"
 	}
-```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -160,9 +154,9 @@ Retrieves the open orders of the authenticated user.
 				"price": <integer>,
 				"time": <integer>
 			},
+			⋮
 		]
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -178,14 +172,12 @@ Retrieves the open orders of the authenticated user.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -193,6 +185,70 @@ Retrieves the open orders of the authenticated user.
 -------------|------------------------------------------------------------------
 6            | "You are making information requests too rapidly."
 7            | "You are not authenticated."
+
+---
+
+# EstimateMarketOrder
+
+Simulates the execution of a market order and returns the quantity and total that would have been traded. This estimation does not take into account trading fees.
+
+**Authorization:** None required.
+
+### Request
+
+	#!json
+	{
+		"tag": <integer>,
+		"method": "EstimateMarketOrder",
+		"base": <integer>,
+		"counter": <integer>,
+		"quantity": <integer>,
+		"total": <integer>
+	}
+
+`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+
+`base` and `counter` are the asset codes of the base and counter assets of the order.
+
+`quantity` is the amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `total` is supplied.
+
+`total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `quantity` is omitted.
+
+### Success Reply
+
+	#!json
+	{
+		"tag": <integer>,
+		"error_code": 0,
+		"quantity": <integer>,
+		"total": <integer>
+	}
+
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`quantity` is the amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
+
+`total` is the amount of the counter asset that would have been traded if the market order really had been executed. It is always positive.
+
+### Error Reply
+
+	#!json
+	{
+		"tag": <integer>,
+		"error_code": <integer>,
+		"error_msg": <string>
+	}
+
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`error_code` | `error_msg`
+-------------|------------------------------------------------------------------
+1            | "You specified an invalid asset pair."
+6            | "You are making information requests too rapidly."
+8            | "Quantity must not be zero."
+8            | "Total must not be zero."
+8            | "You must specify either quantity or total for a market order."
+8            | *(varies)*
 
 ---
 
@@ -204,7 +260,7 @@ Places an order to execute a specified trade. This command is used to place both
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "PlaceOrder",
@@ -214,7 +270,6 @@ Places an order to execute a specified trade. This command is used to place both
 		"price": <integer>,
 		"total": <integer>
 	}
-```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -234,7 +289,7 @@ omitted    | omitted  | supplied
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -242,25 +297,23 @@ omitted    | omitted  | supplied
 		"time": <integer>,
 		"remaining": <integer>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `id` is the numeric identifier assigned to the opened order. It is present only if `price` was supplied in the request.
 
-`time` is the micro-timestamp at which which the order was opened. It is present only if `price` was supplied in the request.
+`time` is the micro-timestamp at which the order was opened. It is present only if `price` was supplied in the request.
 
 `remaining` is the amount of the base asset (if `quantity` was supplied in the request), or the amount of the counter asset (if `total` was supplied in the request), that could not be traded, either because insufficient liquidity existed on the order book or because the user's balance was exhausted. It is present only if `price` was omitted from the request.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -272,6 +325,7 @@ omitted    | omitted  | supplied
 6            | "You are sending orders too rapidly."
 7            | "You are not authenticated."
 8            | "Quantity must not be zero."
+8            | "Order total would overflow."
 8            | "You must specify either quantity or total for a market order."
 8            | *(varies)*
 
@@ -285,13 +339,12 @@ Cancels an open order belonging to the authenticated user.
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "CancelOrder",
 		"id": <integer>
 	}
-```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -299,7 +352,7 @@ Cancels an open order belonging to the authenticated user.
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -308,25 +361,23 @@ Cancels an open order belonging to the authenticated user.
 		"quantity": <integer>,
 		"price": <integer>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `base` and `counter` are the asset codes of the base and counter assets of the canceled order.
 
-`quantity` is the amount of the base asset that was remaining to be traded at the time the order was canceled. It is negative for sell orders and positive for buy orders.
+`quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
 
 `price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -339,7 +390,6 @@ Cancels an open order belonging to the authenticated user.
 
 ---
 
-
 # GetTradeVolume
 
 Retrieves the 30-day trailing trade volume for the authenticated user.
@@ -348,39 +398,39 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "GetTradeVolume",
 		"asset": <integer>
 	}
-```
+
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `asset` is the asset code of the asset whose trade volume is to be retrieved.
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
 		"volume": <integer>
 	}
-```
+
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `volume` is the user's 30-day trailing trade volume in the specifed asset.
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
+
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `error_code` | `error_msg`
@@ -391,78 +441,16 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ---
 
+# WatchOrders
 
-
-# EstimateMarketOrder
-
-Simulates the execution of a market order and returns the quantity and total that would have been traded. If you would like to receive the total estimate, provide quantity and to receive quantity. This estimation does not take into account trading fees.
+Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book.
+When subscribing, up to 2000 orders from the top of the book are returned in the response.
 
 **Authorization:** None required.
 
 ### Request
 
-```json
-	{
-		"tag": <integer>,
-		"method": "EstimateMarketOrder",
-		"base": <integer>,
-		"counter": <integer>,
-		"quantity": <integer>,
-		"total": <integer>
-	}
-```
-`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
-
-`base` and `counter` are the asset codes of the base and counter assets of the order.
-
-`quantity` is the amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `total` is supplied.
-
-`total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `quantity` is omitted.
-
-### Success Reply
-
-```json
-	{
-		"tag": <integer>,
-		"error_code": 0,
-		"quantity": <integer>,
-		"total": <integer>
-	}
-```
-`tag` is present iff `tag` was given and non-zero in the request.
-
-`quantity` is the amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
-
-`total` is the amount of the counter asset that would have been traded if the market order really had been executed. It is always positive.
-
-### Error Reply
-
-```json
-	{
-		"tag": <integer>,
-		"error_code": <integer>,
-		"error_msg": <string>
-	}
-```
-`tag` is present iff `tag` was given and non-zero in the request.
-
-`error_code` | `error_msg`
--------------|------------------------------------------------------------------
-1            | "You specified an invalid asset pair."
-6            | "You are making information requests too rapidly."
-8            | "Quantity must not be zero."
-8            | "Total must not be zero."
-8            | "You must specify either quantity or total for a market order."
-8            | *(varies)*
-
----
-# WatchOrders
-
-Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book. When subscribing, up to 2000 orders from the top of the book are returned in the response.
-
-### Request
-
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "WatchOrders",
@@ -470,35 +458,50 @@ Subscribes/unsubscribes the requesting client to/from the orders feed of a speci
 		"counter": <integer>,
 		"watch": <boolean>
 	}
-```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
-`base` and `counter` and the asset codes of the base and counter assets of the order book whose orders feed the client is to be subscribed to or unsubscribed from.
+`base` and `counter` are the asset codes of the base and counter assets of the order book whose orders feed the client is to be subscribed to or unsubscribed from.
 
 `watch` is a flag indicating whether to subscribe (**true**) or unsubscribe (**false**).
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
-		"error_code": 0
+		"error_code": 0,
+		"orders": [
+			{
+				"id": <integer>,
+				"quantity": <integer>,
+				"price": <integer>,
+				"time": <integer>
+			},
+			⋮
+		]
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
+`orders` is present iff `watch` was **true** in the request.
+
+`id` is the numeric identifier of an order.
+
+`quantity` is the amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
+
+`price` is the price at which the order offers to trade, scaled by a factor of 10000.
+
+`time` is the micro-timestamp at which the order was opened.
+
 ### Error Reply
 
-```json
-
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -519,7 +522,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Request
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"method": "WatchTicker",
@@ -527,7 +530,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"counter": <integer>,
 		"watch": <boolean>
 	}
-```
+
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker feed the client is to be subscribed to or unsubscribed from.
@@ -536,7 +539,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Success Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -547,7 +550,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"high": <integer>,
 		"volume": <integer>
 	}
-```
+
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `last`, `bid`, `ask`, `low`, `high`, and `volume` are present iff `watch` was **true** in the request.
@@ -562,13 +565,13 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Error Reply
 
-```json
+	#!json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
-```
+
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `error_code` | `error_msg`
@@ -587,13 +590,13 @@ One of the authenticated user's balances has changed.
 
 ### Notification
 
-```json
+	#!json
 	{
 		"notice": "BalanceChanged",
 		"asset": <integer>,
 		"balance": <integer>
 	}
-```
+
 `asset` is the asset code of the balance that changed.
 
 `balance` is the user's new available balance in the specified asset.
@@ -608,7 +611,7 @@ A new order has been opened.
 
 ### Notification
 
-```json
+	#!json
 	{
 		"notice": "OrderOpened",
 		"id": <integer>,
@@ -618,7 +621,7 @@ A new order has been opened.
 		"price": <integer>,
 		"time": <integer>
 	}
-```
+
 `id` is the numeric identifier of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
@@ -639,9 +642,9 @@ Two orders matched, resulting in a trade.
 
 ### Notification
 
-```json
+	#!json
 	{
-		"notice": "OrderMatched",
+		"notice": "OrdersMatched",
 		"bid": <integer>,
 		"ask": <integer>,
 		"base": <integer>,
@@ -657,7 +660,7 @@ Two orders matched, resulting in a trade.
 		"ask_base_fee": <integer>,
 		"ask_counter_fee": <integer>
 	}
-```
+
 `bid` and `ask` are the numeric identifiers of the bid and ask orders, respectively, that matched. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the orders.
@@ -684,7 +687,7 @@ An order was removed from the order book.
 
 ### Notification
 
-```json
+	#!json
 	{
 		"notice": "OrderClosed",
 		"id": <integer>,
@@ -693,7 +696,7 @@ An order was removed from the order book.
 		"quantity": <integer>,
 		"price": <integer>,
 	}
-```
+
 `id` is the numeric identifier of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
@@ -712,7 +715,7 @@ The ticker for an order book changed.
 
 ### Notification
 
-```json
+	#!json
 	{
 		"notice": "TickerChanged",
 		"base": <integer>,
@@ -724,7 +727,7 @@ The ticker for an order book changed.
 		"high": <integer>,
 		"volume": <integer>
 	}
-```
+
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker changed.
 
 `last` is the price at which the last trade in the specified order book executed, scaled by a factor of 10000, or **null** if no such trade has yet executed. It is present only if it has changed since the previous notice in which it was present.
