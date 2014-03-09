@@ -14,7 +14,7 @@ Authenticates as a user by signing a challenge.
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "Authenticate",
@@ -26,6 +26,7 @@ Authenticates as a user by signing a challenge.
 			<string>
 		]
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -39,22 +40,24 @@ Authenticates as a user by signing a challenge.
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -76,17 +79,18 @@ Retrieves the available balances of the authenticated user.
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "GetBalances"
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -98,6 +102,7 @@ Retrieves the available balances of the authenticated user.
 			⋮
 		]
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -107,12 +112,13 @@ Retrieves the available balances of the authenticated user.
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -131,17 +137,18 @@ Retrieves the open orders of the authenticated user.
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "GetOrders"
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -157,6 +164,7 @@ Retrieves the open orders of the authenticated user.
 			⋮
 		]
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -172,12 +180,13 @@ Retrieves the open orders of the authenticated user.
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -196,7 +205,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "EstimateMarketOrder",
@@ -205,6 +214,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 		"quantity": <integer>,
 		"total": <integer>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -216,13 +226,14 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
 		"quantity": <integer>,
 		"total": <integer>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -232,12 +243,13 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -260,7 +272,7 @@ Places an order to execute a specified trade. This command is used to place both
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "PlaceOrder",
@@ -270,6 +282,7 @@ Places an order to execute a specified trade. This command is used to place both
 		"price": <integer>,
 		"total": <integer>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -289,7 +302,7 @@ omitted    | omitted  | supplied
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -297,6 +310,7 @@ omitted    | omitted  | supplied
 		"time": <integer>,
 		"remaining": <integer>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -308,12 +322,13 @@ omitted    | omitted  | supplied
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -339,12 +354,13 @@ Cancels an open order belonging to the authenticated user.
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "CancelOrder",
 		"id": <integer>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -352,7 +368,7 @@ Cancels an open order belonging to the authenticated user.
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -361,6 +377,7 @@ Cancels an open order belonging to the authenticated user.
 		"quantity": <integer>,
 		"price": <integer>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -372,12 +389,13 @@ Cancels an open order belonging to the authenticated user.
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -398,12 +416,13 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "GetTradeVolume",
 		"asset": <integer>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -411,12 +430,13 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
 		"volume": <integer>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -424,12 +444,13 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -450,7 +471,7 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "WatchOrders",
@@ -458,6 +479,7 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 		"counter": <integer>,
 		"watch": <boolean>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -467,7 +489,7 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -481,6 +503,7 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 			⋮
 		]
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -496,12 +519,13 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -522,7 +546,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Request
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"method": "WatchTicker",
@@ -530,6 +554,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"counter": <integer>,
 		"watch": <boolean>
 	}
+```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
@@ -539,7 +564,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Success Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": 0,
@@ -550,6 +575,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 		"high": <integer>,
 		"volume": <integer>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -565,12 +591,13 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 ### Error Reply
 
-	#!json
+```json
 	{
 		"tag": <integer>,
 		"error_code": <integer>,
 		"error_msg": <string>
 	}
+```
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
@@ -590,12 +617,13 @@ One of the authenticated user's balances has changed.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "BalanceChanged",
 		"asset": <integer>,
 		"balance": <integer>
 	}
+```
 
 `asset` is the asset code of the balance that changed.
 
@@ -611,7 +639,7 @@ A new order has been opened.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrderOpened",
 		"id": <integer>,
@@ -621,6 +649,7 @@ A new order has been opened.
 		"price": <integer>,
 		"time": <integer>
 	}
+```
 
 `id` is the numeric identifier of the order.
 
@@ -642,7 +671,7 @@ Two orders matched, resulting in a trade.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrdersMatched",
 		"bid": <integer>,
@@ -660,6 +689,7 @@ Two orders matched, resulting in a trade.
 		"ask_base_fee": <integer>,
 		"ask_counter_fee": <integer>
 	}
+```
 
 `bid` and `ask` are the numeric identifiers of the bid and ask orders, respectively, that matched. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
 
@@ -687,7 +717,7 @@ An order was removed from the order book.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "OrderClosed",
 		"id": <integer>,
@@ -696,6 +726,7 @@ An order was removed from the order book.
 		"quantity": <integer>,
 		"price": <integer>,
 	}
+```
 
 `id` is the numeric identifier of the order.
 
@@ -715,7 +746,7 @@ The ticker for an order book changed.
 
 ### Notification
 
-	#!json
+```json
 	{
 		"notice": "TickerChanged",
 		"base": <integer>,
@@ -727,6 +758,7 @@ The ticker for an order book changed.
 		"high": <integer>,
 		"volume": <integer>
 	}
+```
 
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker changed.
 
