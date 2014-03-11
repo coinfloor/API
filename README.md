@@ -2,7 +2,7 @@ API
 ===
 
 All quantities and prices transmitted via the API must have implicit scale factors applied.
-Before using the API, please read [SCALE.md](SCALE.md).
+Before using the API, please read [SCALE.md](SCALE.md) and [LIMITS.md](LIMITS.md).
 
 ---
 
