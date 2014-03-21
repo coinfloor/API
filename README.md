@@ -1,8 +1,18 @@
 API
 ===
 
-All quantities and prices transmitted via the API must have implicit scale factors applied.
-Before using the API, please read [SCALE.md](SCALE.md) and [LIMITS.md](LIMITS.md).
+Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][] connection to `api.coinfloor.co.uk` on port 80 for unencrypted transport and port 443 for TLS transport. Commands, replies, and notifications traverse the WebSocket in text frames with JSON-formatted payloads.
+
+WebSocket connections to the API will time out after 60 seconds of no traffic passing in either direction. To prevent timeouts, send a [Ping frame][] approximately every 45 seconds while the connection is otherwise idle. You do not need to send Ping frames if you are otherwise sending or receiving data frames on the socket.
+
+To protect the performance of the system, Coinfloor imposes certain limits on the rates at which you may issue commands to the API. Please see [LIMITS.md](LIMITS.md).
+
+All quantities and prices are transmitted and received as integers with implicit scale factors. For scale information, please see [SCALE.md](SCALE.md).
+
+Coinfloor has published [client libraries](https://github.com/coinfloor) for several popular languages to aid you in implementing your client application.
+
+[WebSocket]: https://tools.ietf.org/html/rfc6455
+[Ping frame]: https://tools.ietf.org/html/rfc6455#section-5.5.2
 
 ---
 
