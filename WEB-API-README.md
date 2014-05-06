@@ -4,7 +4,7 @@ Web-API
 A simple to use API wrapper that allows users to access the Websocket API via HTTP
 
 
-Coinfloor's web API allows users to make full use of the Coinfloor platform and [existing API][WebSocket API] in a standard HTTP request/response fashion, using a user ID, API key, and password for authentication.
+Coinfloor's web API allows users to make full use of the Coinfloor platform and [WebSocket API] in a standard HTTP request/response fashion, using a user ID, API key, and password for authentication.
 
 ---
 # Security
@@ -25,7 +25,7 @@ You can get your authentication credentials from the dashboard on the Coinfloor 
 ---
 # Body, methods
 
-All method calls for the web API are as described in the [WebSocket API][] documentation. The HTTP request body must be a JSON array containing up to six API method calls.
+All method calls for the web API are as described in the [WebSocket API] documentation. The HTTP request body must be a JSON array containing up to six API method calls.
 
 A Ruby example:
 
