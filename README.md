@@ -23,7 +23,7 @@ The HTTP API is accessible via HTTPS connection to **webapi.coinfloor.co.uk** on
 
 i.e. 
 ```text
-https://webapi.coinfloor.co.uk:8443
+https://webapi.coinfloor.co.uk:8443/api/
 ```
 
 [Click here for more details on how to use the Simple HTTP Web API][Web-API API]
