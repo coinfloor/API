@@ -16,9 +16,9 @@ Due to the security credentials being sent with each request (over SSL), use of 
 
 Authentication credentials are passed in these HTTP request headers:
 ```text
-Coinfloor-User-Id:  <string>
-Coinfloor-Cookie:   <string>
-Coinfloor-Password: <string>
+coinfloor-user-id:  <string>
+coinfloor-cookie:   <string>
+coinfloor-password: <string>
 ```
 You can get your authentication credentials from the dashboard on the Coinfloor site.
 
@@ -31,11 +31,18 @@ A Ruby example:
 
 ``` ruby
 require 'httparty'
-response = HTTParty.post(
-  "https://web_api.coinfloor.co.uk:8443/",
 
-  :headers => {'Coinfloor-User-Id' => '42', 'Coinfloor-Cookie' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZa=', 'Coinfloor-Password' => 'opensesame'},
-  :body    => {:methods => "[{\"method\":\"GetBalances\",\"tag\":1} , {\"method\":\"GetOrders\",\"tag\":2}]" }
+response = HTTParty.post(
+  "https://web_api.coinfloor.co.uk:8443/api/",
+  
+  :headers => {
+    'content-type'       => 'application/json',
+    'coinfloor-user-id'  => '42',
+    'coinfloor-cookie'   => 'ABCDEFGHIJKLMNOPQRSTUVWXYZa=',
+    'coinfloor-password' => 'opensesame'
+  },
+  
+  :body    => "[{\"method\":\"GetBalances\",\"tag\":1}, {\"method\":\"GetOrders\",\"tag\":2}]"
 )
 ```
 
