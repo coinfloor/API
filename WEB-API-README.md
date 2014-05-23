@@ -33,7 +33,7 @@ A Ruby example:
 require 'httparty'
 
 response = HTTParty.post(
-  "https://web_api.coinfloor.co.uk:8443/api/",
+  "https://webapi.coinfloor.co.uk:8443/api/",
   
   :headers => {
     'content-type'       => 'application/json',
