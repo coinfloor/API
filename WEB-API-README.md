@@ -17,7 +17,7 @@ Due to the security credentials being sent with each request (over SSL), use of 
 Authentication credentials are passed in these HTTP request headers:
 ```text
 coinfloor-user-id:  <string>
-coinfloor-cookie:   <string>
+coinfloor-api-key:  <string>
 coinfloor-password: <string>
 ```
 You can get your authentication credentials from the dashboard on the Coinfloor site.
@@ -38,7 +38,7 @@ response = HTTParty.post(
   :headers => {
     'content-type'       => 'application/json',
     'coinfloor-user-id'  => '42',
-    'coinfloor-cookie'   => 'ABCDEFGHIJKLMNOPQRSTUVWXYZa=',
+    'coinfloor-api-key'  => 'ABCDEFGHIJKLMNOPQRSTUVWXYZa=',
     'coinfloor-password' => 'opensesame'
   },
   
