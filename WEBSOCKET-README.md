@@ -288,15 +288,20 @@ Places an order to execute a specified trade. This command is used to place both
 	{
 		"tag": <integer>,
 		"method": "PlaceOrder",
+		"tonce": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
 		"price": <integer>,
-		"total": <integer>
+		"total": <integer>,
+		"persist": <boolean>
 	}
 ```
 
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+
+`tonce` is optional. If given, it must be non-zero, and it must be strictly greater than any tonce given in any successful `PlaceOrder` command previously issued by the authenticated user.
+The purpose of the tonce is to allow the user to resubmit a `PlaceOrder` command (e.g., after a connection failure) without risk of creating a duplicate order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
@@ -305,6 +310,8 @@ Places an order to execute a specified trade. This command is used to place both
 `price` is the price at which the order offers to trade, scaled by a factor of 10000. It is optional; if omitted, the order will be executed as a market order.
 
 `total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `price` is supplied and must be supplied if `quantity` is omitted.
+
+`persist` is optional. If **true** or omitted, the order will remain on the order book until canceled or fulfilled. If **false**, the order will be canceled automatically when the client disconnects. This flag has no effect on market orders.
 
 `quantity` | `price`  | `total`
 -----------|----------|---------
@@ -347,10 +354,12 @@ omitted    | omitted  | supplied
 `error_code` | `error_msg`
 -------------|------------------------------------------------------------------
 1            | "You specified an invalid asset pair."
+3            | "Tonce is out of sequence."
 4            | "You have insufficient funds."
 5            | "You have too many outstanding orders."
 6            | "You are sending orders too rapidly."
 7            | "You are not authenticated."
+8            | "Tonce must not be zero."
 8            | "Quantity must not be zero."
 8            | "Order total would overflow."
 8            | "You must specify either quantity or total for a market order."
