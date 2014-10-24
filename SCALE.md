@@ -8,7 +8,10 @@ Asset quantities and totals transmitted via the Coinfloor API are encoded as int
 | Asset Type | Asset Code | Scale Factor | Atomic Unit |
 |:----------:|-----------:|-------------:|------------:|
 |     XBT    |     0xF800 |        10000 |     Ƀ0.0001 |
+|     EUR    |     0xFA00 |          100 |       €0.01 |
 |     GBP    |     0xFA20 |          100 |       £0.01 |
+|     USD    |     0xFA80 |          100 |       $0.01 |
+|     PLN    |     0xFDA8 |          100 |     0.01 zł |
 
 ### Examples
 
@@ -26,7 +29,10 @@ Prices transmitted via the Coinfloor API are encoded as integers with an implici
 
 | Asset Pair | Scale Factor |
 |:----------:|-------------:|
+|   XBT:EUR  |          100 |
 |   XBT:GBP  |          100 |
+|   XBT:USD  |          100 |
+|   XBT:PLN  |          100 |
 
 ### Examples
 
