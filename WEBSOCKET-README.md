@@ -166,6 +166,7 @@ Retrieves the open orders of the authenticated user.
 		"orders": [
 			{
 				"id": <integer>,
+				"tonce": <integer>,
 				"base": <integer>,
 				"counter": <integer>,
 				"quantity": <integer>,
@@ -180,6 +181,8 @@ Retrieves the open orders of the authenticated user.
 `tag` is present iff `tag` was given and non-zero in the request.
 
 `id` is the numeric identifier of an order.
+
+`tonce` is the tonce given in the `PlaceOrder` command that opened the order, or **null** if that command did not specify a tonce.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
@@ -393,20 +396,29 @@ Cancels an open order belonging to the authenticated user.
 	{
 		"tag": <integer>,
 		"error_code": 0,
+		"id": <integer>,
+		"tonce": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
-		"price": <integer>
+		"price": <integer>,
+		"time": <integer>
 	}
 ```
 
 `tag` is present iff `tag` was given and non-zero in the request.
+
+`id` is the numeric identifier of the canceled order.
+
+`tonce` is the tonce given in the `PlaceOrder` command that opened the order, or **null** if that command did not specify a tonce.
 
 `base` and `counter` are the asset codes of the base and counter assets of the canceled order.
 
 `quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
 
 `price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
+
+`time` is the micro-timestamp at which the order was opened.
 
 ### Error Reply
 
@@ -455,10 +467,12 @@ Cancels all open orders belonging to the authenticated user.
 		"orders": [
 			{
 				"id": <integer>,
+				"tonce": <integer>,
 				"base": <integer>,
 				"counter": <integer>,
 				"quantity": <integer>,
-				"price": <integer>
+				"price": <integer>,
+				"time": <integer>
 			},
 			⋮
 		]
@@ -469,11 +483,15 @@ Cancels all open orders belonging to the authenticated user.
 
 `id` is the numeric identifier of a canceled order.
 
+`tonce` is the tonce given in the `PlaceOrder` command that opened the order, or **null** if that command did not specify a tonce.
+
 `base` and `counter` are the asset codes of the base and counter assets of the canceled order.
 
 `quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
 
 `price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
+
+`time` is the micro-timestamp at which the order was opened.
 
 ### Error Reply
 
@@ -732,6 +750,7 @@ A new order has been opened.
 	{
 		"notice": "OrderOpened",
 		"id": <integer>,
+		"tonce": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
@@ -741,6 +760,8 @@ A new order has been opened.
 ```
 
 `id` is the numeric identifier of the order.
+
+`tonce` is the tonce given in the `PlaceOrder` command that opened the order, or **null** if that command did not specify a tonce. It is present only if the recipient of the notification is the owner of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
@@ -764,7 +785,9 @@ Two orders matched, resulting in a trade.
 	{
 		"notice": "OrdersMatched",
 		"bid": <integer>,
+		"bid_tonce": <integer>,
 		"ask": <integer>,
+		"ask_tonce": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
@@ -781,6 +804,8 @@ Two orders matched, resulting in a trade.
 ```
 
 `bid` and `ask` are the numeric identifiers of the bid and ask orders, respectively, that matched. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
+
+`bid_tonce` and `ask_tonce` are the tonces given in the `PlaceOrder` commands that opened the bid and ask orders, respectively, or **null** if the respective command did not specify a tonce. These fields are present only if the recipient of the notification is the buyer or seller, respectively.
 
 `base` and `counter` are the asset codes of the base and counter assets of the orders.
 
@@ -810,6 +835,7 @@ An order was removed from the order book.
 	{
 		"notice": "OrderClosed",
 		"id": <integer>,
+		"tonce": <integer>,
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
@@ -818,6 +844,8 @@ An order was removed from the order book.
 ```
 
 `id` is the numeric identifier of the order.
+
+`tonce` is the tonce given in the `PlaceOrder` command that opened the order, or **null** if that command did not specify a tonce. It is present only if the recipient of the notification is the owner of the order.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
