@@ -136,6 +136,7 @@ Retrieves the available balances of the authenticated user.
 -------------|------------------------------------------------------------------
 6            | "You are making information requests too rapidly."
 7            | "You are not authenticated."
+8            | *(varies)*
 
 ---
 
@@ -204,6 +205,7 @@ Retrieves the open orders of the authenticated user.
 -------------|------------------------------------------------------------------
 6            | "You are making information requests too rapidly."
 7            | "You are not authenticated."
+8            | *(varies)*
 
 ---
 
@@ -544,6 +546,7 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 1            | "You specified an invalid asset pair."
 1            | "You are not watching the order book for the specified asset pair."
 2            | "You are already watching the order book for the specified asset pair."
+8            | *(varies)*
 
 ---
 
@@ -616,6 +619,7 @@ When subscribing, the current ticker values of the book are returned in the resp
 1            | "You specified an invalid asset pair."
 1            | "You are not watching the ticker for the specified asset pair."
 2            | "You are already watching the ticker for the specified asset pair."
+8            | *(varies)*
 
 ---
 
@@ -734,7 +738,7 @@ An order was removed from the order book.
 		"base": <integer>,
 		"counter": <integer>,
 		"quantity": <integer>,
-		"price": <integer>,
+		"price": <integer>
 	}
 ```
 
