@@ -420,6 +420,72 @@ Cancels an open order belonging to the authenticated user.
 
 ---
 
+# CancelAllOrders
+
+Cancels all open orders belonging to the authenticated user.
+
+**Authorization:** Any authenticated user may invoke this command.
+
+### Request
+
+```json
+	{
+		"tag": <integer>,
+		"method": "CancelAllOrders"
+	}
+```
+
+`tag` is optional. Iff given and non-zero, it will be echoed in the reply.
+
+### Success Reply
+
+```json
+	{
+		"tag": <integer>,
+		"error_code": 0,
+		"orders": [
+			{
+				"id": <integer>,
+				"base": <integer>,
+				"counter": <integer>,
+				"quantity": <integer>,
+				"price": <integer>
+			},
+			⋮
+		]
+	}
+```
+
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`id` is the numeric identifier of a canceled order.
+
+`base` and `counter` are the asset codes of the base and counter assets of the canceled order.
+
+`quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
+
+`price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
+
+### Error Reply
+
+```json
+	{
+		"tag": <integer>,
+		"error_code": <integer>,
+		"error_msg": <string>
+	}
+```
+
+`tag` is present iff `tag` was given and non-zero in the request.
+
+`error_code` | `error_msg`
+-------------|------------------------------------------------------------------
+6            | "You are sending orders too rapidly."
+7            | "You are not authenticated."
+8            | *(varies)*
+
+---
+
 # GetTradeVolume
 
 Retrieves the 30-day trailing trade volume for the authenticated user.
