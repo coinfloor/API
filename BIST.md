@@ -1,7 +1,5 @@
 # COINFLOOR BIST API
 
-![Coinlfoor Icon](https://coinfloor.co.uk/img/thumb_appicon.png =200x80)
-
 ## WHAT IS THE BIST API?
 
 Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp HTTP API](https://www.bitstamp.net/api/). This document details the functionality, the most notable of which are related to Coinfloor's use of different currency codes.  A separate document focusses solelyonly on what is required to [migrate code written for Bitstamp’s HTTP API to BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
@@ -17,8 +15,7 @@ The Bitstamp-like API can be accessed at the following API endpoints:
 
 These endpoint URIs replace the https://www.bitstamp.net/api/ portion of Bitstamp's URIs.
 
-<span style="color:red;">**N.B:  All examples below use the XBT/GBP asset pair but this can be changed to the asset pair of choice.
-**</span>
+**N.B: All examples below use the XBT/GBP asset pair but this can be changed to the asset pair of choice.**
 
 
 ### WHAT IS THE BITSTAMP API?
@@ -59,7 +56,7 @@ Returns JSON dictionary:
 * bid - highest buy order
 * ask - lowest sell order
 
-**N.B: **
+**N.B:**
 
 1. Bitstamp includes an undocumented timestamp field in the returned JSON object. Coinfloor does not include this field. Please refer to the Date HTTP response header.
 
@@ -70,7 +67,7 @@ GET https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/order_book/
 
 Returns JSON dictionary with "bids" and "asks". Each is a list of open orders and each order is represented as a list of price and amount.
 
-**N.B: **
+**N.B:**
 
 
 1. Bitstamp includes an undocumented timestamp field in the returned JSON object. Coinfloor does not include this field. Please refer to the Date HTTP response header.
