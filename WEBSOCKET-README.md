@@ -363,6 +363,7 @@ omitted    | omitted  | supplied
 6            | "You are sending orders too rapidly."
 7            | "You are not authenticated."
 8            | "Tonce must not be zero."
+8            | "Price must not be zero."
 8            | "Quantity must not be zero."
 8            | "Order total would overflow."
 8            | "You must specify either quantity or total for a market order."

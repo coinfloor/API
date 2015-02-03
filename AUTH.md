@@ -80,6 +80,8 @@ Suppose a client whose user identifier is 1 and whose passphrase is "opensesame"
 		r = 0x3fb77a9d 7b5b2a68 209e76f6 872078c5 791340d5 989854ad a3ab735e
 		s = 0x34b84341 2f18a910 f18a7d4c e1d35978 60e6345b 22bf7894 cf67780a
 
+	The [sign_secp224k1][] utility may be used to produce the signature.
+
 1. The client encodes the signature using base64:
 
 		P7d6nXtbKmggnnb2hyB4xXkTQNWYmFSto6tzXg==
@@ -116,3 +118,4 @@ Suppose a client whose user identifier is 1 and whose passphrase is "opensesame"
 [SECG]: http://www.secg.org/
 [SEC2]: http://www.secg.org/download/aid-784/sec2-v2.pdf
 [SEC2-mirror]: http://www.shield-kratos.com/pdf/sec2-v2.pdf
+[sign_secp224k1]: https://github.com/coinfloor/libecp#sign_secp224k1
