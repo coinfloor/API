@@ -2,7 +2,7 @@
 
 ## WHAT IS THE BIST API?
 
-Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp HTTP API](https://www.bitstamp.net/api/). This document details the functionality, the most notable of which are related to Coinfloor's use of different currency codes.  A separate document focusses solelyonly on what is required to [migrate code written for Bitstamp’s HTTP API to BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
+Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp HTTP API](https://www.bitstamp.net/api/). This document details the functionality, the most notable of which are related to Coinfloor's use of different currency codes.  A separate document focusses solely on what is required to [migrate code written for Bitstamp’s HTTP API to BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
 
 Because Coinfloor is a multi-currency exchange and Bitstamp is not, Coinfloor must emulate the entire Bitstamp API at multiple separate endpoints, one for each market that Coinfloor operates.
 
@@ -16,12 +16,6 @@ The Bitstamp-like API can be accessed at the following API endpoints:
 These endpoint URIs replace the https://www.bitstamp.net/api/ portion of Bitstamp's URIs.
 
 **N.B: All examples below use the XBT/GBP asset pair but this can be changed to the asset pair of choice.**
-
-
-### WHAT IS THE BITSTAMP API?
-
-Bitstamp application programming interface (API) allows our clients to access and control their BitStamp accounts, using custom written software.  It can located [here](https://www.bitstamp.net/api/). 
-
 
 
 ##REQUEST LIMITS
@@ -58,9 +52,9 @@ Returns JSON dictionary:
 
 **N.B:**
 
-1. Bitstamp includes an undocumented timestamp field in the returned JSON object. Coinfloor does not include this field. Please refer to the Date HTTP response header.
+1. Please refer to the Date HTTP response header for any date or time information you may require.
 
-2. returns null for any ticker fields that are not populated, as may happen if no trade has occurred in the past 24 hours.
+2. Coinfloor returns null for any ticker fields that are not populated, as may happen if no trade has occurred in the past 24 hours.
 
 #### ORDER BOOK
 GET https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/order_book/
@@ -70,7 +64,7 @@ Returns JSON dictionary with "bids" and "asks". Each is a list of open orders an
 **N.B:**
 
 
-1. Bitstamp includes an undocumented timestamp field in the returned JSON object. Coinfloor does not include this field. Please refer to the Date HTTP response header.
+1. Please refer to the Date HTTP response header for any date or time information you may require.
 
 
 #### TRANSACTIONS
@@ -89,36 +83,38 @@ Returns descending JSON list of transactions. Every transaction (dictionary) con
 
 **N.B:**
 
-1. Bitstamp encodes the date field as a string. Coinfloor encodes the datefield as an integer.
+1. Coinfloor encodes the date field as an integer.
 
 
 ##API AUTHENTICATION
 All private API calls require authentication. You need to provide 3 parameters to authenticate a request:
 
+* User ID
 * API key
-* Tonce
-* Signature
+* Passphrase
 
 
+####User ID
+To get your User ID (sometimes referred to as a Core ID), go to the Dashboard
 
-#### API KEY
-To get an API key, go to the Dashboard
+#### API key
+To get your API key (referred to as a "Cookie" in the WebSocket API documentation), go to the Dashboard
 
-####CORE ID
-To get an Core ID, go to the Dashboard
-
-####TONCE
-Tonce is a regular integer number. It must be increasing with every request you make. Example: if you set tonce to 1 in your first request, you must set it to at least 2 in your second request. You are not required to start with 1. A common practice is to use [unix time](http://en.wikipedia.org/wiki/Unix_time) for that parameter.
+####Passphrase
+Is the password you use to log into Coinfloor.
 
 **N.B:**
 
-1. Bitstamp authenticates requests using an API key and an HMAC (which Bitstamp calls a "signature"). The HMAC is computed using a tonce (which Bitstamp calls a "nonce," even though it isn't one), a client ID, an API key, and a secret key as inputs. The API key, tonce, and HMAC are then passed as POST parameters.
+1. Coinfloor authenticates requests using standard HTTP Basic authentication. The username portion of the Basic credentials is constructed by concatenating the numeric user ID, a slash, and the user's API authentication cookie. The password portion is simply the user's login passphrase.
 
-2. Coinfloor authenticates requests using standard HTTP Basic authentication. The username portion of the Basic credentials is constructed by concatenating the numeric user ID, a slash, and the user's API authentication cookie. The password portion is simply the user's login passphrase.
+2. Many off-the-shelf HTTP clients (including cURL and all web browsers) can generate the HTTP Basic Authorization request header.
 
-3. Bitstamp passes authentication credentials in POST parameters. Custom software is needed to generate the required HMAC.
+This is an example of how to make a balance request with curl:
 
-4. Coinfloor passes authentication credentials in the HTTP standard Authorization request header. Many off-the-shelf HTTP clients (including cURL and all web browsers) can generate the necessary request header.
+> ``curl -k -u '[User ID]/[API key]:[Passphrase]' https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/balance/``
+
+* ``User ID`` and ``API key`` are provided on your Coinfloor logged in Dashboard page.
+* ``Passphrase`` is your Coinfloor passphrase.
 
 ##PRIVATE FUNCTIONS
 
@@ -127,9 +123,10 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/balance/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
+
 
 Returns JSON dictionary:
 
@@ -161,9 +158,9 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/user_transactions/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
 * offset - skip that many transactions before beginning to return results. Default: 0.
 * limit - limit result to that many transactions. Default: 100. Maximum: 1000.
 * sort - sorting by date and time (asc - ascending; desc - descending). Default: desc.
@@ -189,9 +186,9 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/open_orders/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
 
 Returns JSON list of open orders. Each order is represented as dictionary:
 
@@ -207,18 +204,18 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/cancel_order/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
 * id - order ID
 
 Returns 'true' if order has been found and canceled.
 
 **N.B:**
 
-1. If the specified order could not be found, Bitstamp returns {"error": "Order not found"}. Coinfloor returns false in this case.
+1. If the specified order could not be found, Coinfloor returns **false**.
 
-2. If the specified order was found and canceled, Bitstamp returns true with a Content-Type: application/json header. Coinfloor returns true with a Content-Type: text/plainheader in this case.
+2. If the specified order was found and canceled, Coinfloor returns **true** with a Content-Type: text/plain header in this case.
 
 ####BUY LIMIT ORDER
 
@@ -226,11 +223,12 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
 * amount - amount
 * price - price
+* nonce - optional nonce parameter.  If given, it must be positive
 * ttl - optional parameter that specifies a time-to-live for the order in seconds. If given, it must be positive and must not exceed 86400 (24 hours)
 
 Returns JSON dictionary representing order:
@@ -243,23 +241,25 @@ Returns JSON dictionary representing order:
 
 **N.B:**
 
-1. Coinfloor supports the use of tonces (“time once”) on orders via the optional nonce (“number once”) request parameter (so named to emulate Bitstamp). When tonces are used, each order placed must specify a tonce that is greater than that specified on any previous order since the tonce counter was last reset. 
+1. Coinfloor supports the use of tonces via the optional **nonce** request parameter. When used, each order placed must specify a tonce that is greater than that specified on any previous order since the nonce counter was last reset.  The nonce counter can only be reset via the WebSocket API. 
 
 2. Coinfloor supports an optional time-to-live parameter on orders. If given, the placed order will be canceled automatically after the specified time if it has not already been closed otherwise. It must be positive and must not exceed 86400 (24 hours).
-Note that extenuating circumstances (such as heavy traffic or system upgrades) may force orders placed with times-to-live to be canceled sooner than specified. (This proviso does not apply to orders placed without a time-to-live.)
 
-3. Bitstamp returns a datetime field with microsecond precision. Coinfloor returns a datetime field with whole-second precision.
+    a. Note that extenuating circumstances (such as heavy traffic or system upgrades) may force orders placed with times-to-live to be canceled sooner than specified. (This proviso does not apply to orders placed without a time-to-live.)
+
+3. Coinfloor returns a datetime field with whole-second precision.
 
 ####SELL LIMIT ORDER
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/sell/
 
 Params:
 
-* key - API key
-* core id - core id
-* tonce - tonce
+* User ID - user ID
+* API key - api key
+* Passphrase - passphrase
 * amount - amount
 * price - price
+* nonce - optional nonce parameter.  If given, it must be positive
 * ttl - optional parameter that specifies a time-to-live for the order in seconds. If given, it must be positive and must not exceed 86400 (24 hours)
 
 Returns JSON dictionary representing order:
@@ -272,13 +272,13 @@ Returns JSON dictionary representing order:
 
 **N.B:**
 
-1. Coinfloor supports the use of tonces (“time once”) on orders via the optional nonce (“number once”) request parameter (so named to emulate Bitstamp). When tonces are used, each order placed must specify a tonce that is greater than that specified on any previous order since the tonce counter was last reset. 
+1. Coinfloor supports the use of tonces via the optional **nonce** request parameter. When used, each order placed must specify a tonce that is greater than that specified on any previous order since the nonce counter was last reset.  The nonce counter can only be reset via the WebSocket API. 
 
 2. Coinfloor supports an optional time-to-live parameter on orders. If given, the placed order will be canceled automatically after the specified time if it has not already been closed otherwise. It must be positive and must not exceed 86400 (24 hours).
 
     a. Note that extenuating circumstances (such as heavy traffic or system upgrades) may force orders placed with times-to-live to be canceled sooner than specified. (This proviso does not apply to orders placed without a time-to-live.)
 
-3. Bitstamp returns a datetime field with microsecond precision. Coinfloor returns a datetime field with whole-second precision.
+3. Coinfloor returns a datetime field with whole-second precision.
 
 ####BUY MARKET ORDER
 
@@ -287,15 +287,12 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy_market/
 Params:
 
 * quantity - an amount of the base asset to buy OR
-* total – an amount of the counter asset to buyl
+* total – an amount of the counter asset to buy
 
 Returns JSON dictionary representing order:
 
 * remaining - how much of the requested quantity or total could not be traded
 
-**N.B:**
-
-1. Bitstamp does not implement this method.
 
 #### SELL MARKET ORDER 
 
@@ -310,6 +307,3 @@ Returns JSON dictionary representing order:
 
 * remaining - how much of the requested quantity or total could not be traded
 
-**N.B:**
-
-1. Bitstamp does not implement this method.
