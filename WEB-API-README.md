@@ -1,14 +1,17 @@
-Web API
+***DEPRECATED – please use the [BIST API][BIST]***
 =======
 
-Coinfloor's web API allows users to make full use of the Coinfloor platform and [WebSocket API][] in a standard HTTP request/response fashion, using a user ID, API key, and password for authentication.
+
+## Web API
+
+Coinfloor's web API allows users to make full use of the Coinfloor platform and [WebSocket API] in a standard HTTP request/response fashion, using a user ID, API key, and password for authentication.
 
 ---
-# Security
+## Security
 
-Due to the security credentials being sent with each request (over SSL), use of the web API entails greater exposure than use of the public-key authentication in our [WebSocket API][].
+Due to the security credentials being sent with each request (over SSL), use of the web API entails greater exposure than use of the public-key authentication in our [WebSocket API].
 
-# Authentication credentials
+## Authentication credentials
 
 Authentication credentials are passed in these HTTP request headers:
 ```text
@@ -19,9 +22,9 @@ coinfloor-password: <string>
 You can get your authentication credentials from the dashboard on the Coinfloor site.
 
 ---
-# Body, methods
+## Body, methods
 
-All method calls for the web API are as described in the [WebSocket API][] documentation. The HTTP request body must be a JSON array containing up to six API method calls.
+All method calls for the web API are as described in the [WebSocket API] documentation. The HTTP request body must be a JSON array containing up to six API method calls.
 
 A Ruby example:
 
@@ -42,11 +45,11 @@ response = HTTParty.post(
 )
 ```
 
-# Responses
+## Responses
 
 A successful response will return an HTTP status code of 200 with a JSON-encoded array in the body of the response. For each method call in the request, a corresponding reply will be present in the response array.
 
-# Errors
+## Errors
 
 If there is an error or a problem with your request, you will receive a response with an HTTP error code and no body.
 
@@ -57,4 +60,5 @@ If there is an error or a problem with your request, you will receive a response
 * 503: API is unavailable.
 
 
-[WebSocket API]: WEBSOCKET-README.md
+[BIST]: https://github.com/coinfloor/API/blob/master/BIST.md
+[WebSocket API]: https://github.com/coinfloor/API/blob/master/WEBSOCKET-README.md
