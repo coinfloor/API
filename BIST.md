@@ -169,17 +169,16 @@ Returns descending JSON list of transactions. Every transaction (dictionary) con
 
 * datetime - date and time
 * id - transaction id
-* type - transaction type (2 - market trade)
-* usd - USD amount
-* btc - BTC amount
+* type - transaction type (0 - deposit; 1 - withdrawal; 2 - market trade)
+* gbp - GBP amount
+* xbt - XBT amount
+* xbt_gbp - GBP/XBT price
 * fee - transaction fee
 * order_id - executed order id
 
 **N.B:**
 
-1. Coinfloor currently returns only trade records. It does not return records of deposits or withdrawals.
-
-2. Bitstamp returns the quantity and total of each trade in the btc and usd fields, respectively, and returns the trade price in the (undocumented) btc_usd field. Coinfloor names these fields using currency codes xbt, eur, gbp,usd, and/or pln, depending on the specific API endpoint being accessed.
+1. Bitstamp returns the quantity and total of each trade in the btc and usd fields, respectively, and returns the trade price in the (undocumented) btc_usd field. Coinfloor names these fields using currency codes xbt, eur, gbp, usd, and/or pln, depending on the specific API endpoint being accessed.
 
 ####OPEN ORDERS
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/open_orders/
