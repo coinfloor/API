@@ -88,7 +88,7 @@ Coinfloor does not implement this method.
 
 #### Functional differences
 
-* Coinfloor returns only trade records. It does not return records of deposits or withdrawals.
+None.
 
 #### Structural differences
 
@@ -147,11 +147,33 @@ POST <endpoint>/sell_market/
 
 * Exactly one of:
   * `quantity` – an amount of the base asset to buy or sell
-  * `total` – an amount of the counter asset to buy or sell
+  * `total` – an amount of the counter asset with which to buy the base asset or for which to sell the base asset
 
 ##### Response:
 
 Returns a JSON object containing a single field `remaining`, which communicates how much of the requested quantity or total could not be traded.
+
+
+### Estimate Buy/Sell Market Order
+
+Bitstamp does not implement this method.
+
+#### Structure
+
+```
+POST <endpoint>/estimate_buy_market/
+POST <endpoint>/estimate_sell_market/
+```
+
+##### Request Parameters:
+
+* Exactly one of:
+  * `quantity` – an amount of the base asset that would be bought or sold
+  * `total` – an amount of the counter asset with which the base asset would be bought or for which the base asset would be sold
+
+##### Response:
+
+Returns a JSON object containing fields `quantity` and `total`, which reflect how much of the base and counter assets, respectively, would have been traded if a market order had been executed.
 
 
 ### Withdrawal Requests
@@ -161,7 +183,14 @@ Coinfloor does not implement this method.
 
 ### Bitcoin Withdrawal
 
-Coinfloor does not implement this method.
+#### Functional differences
+
+* Coinfloor does not support withdrawing bitcoins to arbitrary Bitcoin addresses. All withdrawals are made to the address on file for the requesting user.
+
+#### Structural differences
+
+* Coinfloor does not support the `address` parameter and will reject any request that specifies it.
+* Coinfloor does not return a withdrawal identifier. A successful call returns a `204 No Content` status.
 
 
 ### Bitcoin Deposit Address

@@ -286,7 +286,7 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy_market/
 Params:
 
 * quantity - an amount of the base asset to buy OR
-* total – an amount of the counter asset to buy
+* total - an amount of the counter asset with which to buy the base asset
 
 Returns JSON dictionary representing order:
 
@@ -300,9 +300,38 @@ POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/sell_market/
 Params:
 
 * quantity - an amount of the base asset to sell OR
-* total – an amount of the counter asset to sell
+* total - an amount of the counter asset for which to sell the base asset
 
 Returns JSON dictionary representing order:
 
 * remaining - how much of the requested quantity or total could not be traded
 
+
+#### ESTIMATE BUY MARKET ORDER
+
+POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/estimate_buy_market/
+
+Params:
+
+* quantity - an amount of the base asset that would be bought OR
+* total - an amount of the counter asset with which the base asset would be bought
+
+Returns JSON dictionary representing estimate:
+
+* quantity - amount of the base asset that would have been traded
+* total - amount of the counter asset that would have been traded
+
+
+#### ESTIMATE SELL MARKET ORDER
+
+POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/estimate_sell_market/
+
+Params:
+
+* quantity - an amount of the base asset that would be sold OR
+* total - an amount of the counter asset for which the base asset would be sold
+
+Returns JSON dictionary representing estimate:
+
+* quantity - amount of the base asset that would have been traded
+* total - amount of the counter asset that would have been traded
