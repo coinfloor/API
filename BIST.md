@@ -1,5 +1,24 @@
 # COINFLOOR BIST API
 
+- [What Is the BIST API](#what-is-the-bist-api)
+- [Request Limits](#request-limits)
+- [Public Data Functions](#public-data-functions)
+  - [Ticker](#ticker)
+  - [Order Book](#order-book)
+  - [Transactions](#transactions)
+- [API Authentication](#api-authentication)
+- [Private Functions](#private-functions)
+  - [Account Balance](#account-balance)
+  - [User Transactions](#user-transactions)
+  - [Open Orders](#open-orders)
+  - [Cancel Order](#cancel-order)
+  - [Buy Limit Order](#buy-limit-order)
+  - [Sell Limit Order](#sell-limit-order)
+  - [Buy Market Order](#buy-market-order)
+  - [Sell Market Order](#sell-market-order)
+  - [Estimate Buy Market Order](#estimate-buy-market-order)
+  - [Estimate Sell Market Order](#estimate-sell-market-order)
+
 ## WHAT IS THE BIST API?
 
 Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp HTTP API](https://www.bitstamp.net/api/). This document details the functionality, the most notable of which are related to Coinfloor's use of different currency codes.  A separate document focusses solely on what is required to [migrate code written for Bitstamp’s HTTP API to BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
