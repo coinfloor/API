@@ -1,7 +1,7 @@
 API
 ===
 
-Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][] connection to `api.coinfloor.co.uk` on port 80 for unencrypted transport and port 443 for TLS transport. Commands, replies, and notifications traverse the WebSocket in text frames with JSON-formatted payloads.
+Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][IETF RFC 6455] connection to `api.coinfloor.co.uk` on port 80 for unencrypted transport and port 443 for TLS transport. Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][IETF RFC 4627]-formatted payloads.
 
 WebSocket connections to the API will time out after 60 seconds of no traffic passing in either direction. To prevent timeouts, send a [Ping frame][] approximately every 45 seconds while the connection is otherwise idle. You do not need to send Ping frames if you are otherwise sending or receiving data frames on the socket.
 
@@ -11,9 +11,20 @@ All quantities and prices are transmitted and received as integers with implicit
 
 Coinfloor has published [client libraries](https://github.com/coinfloor) for several popular languages to aid you in implementing your client application.
 
-[WebSocket]: https://tools.ietf.org/html/rfc6455
+**Note:** Throughout this documentation, *"iff"* means "[if and only if](https://en.wikipedia.org/wiki/If_and_only_if)" — the biconditional logical connective.
+
+[IETF RFC 4627]: https://tools.ietf.org/html/rfc4627
+[IETF RFC 6455]: https://tools.ietf.org/html/rfc6455
 [Ping frame]: https://tools.ietf.org/html/rfc6455#section-5.5.2
 [scaled]: SCALE.md
+
+## Message Flow
+
+The WebSocket connection can be seen as logically carrying two independent communications channels: a control channel and an asynchronous notifications channel. Messages within each channel are ordered, but the two channels are not strictly synchronized with respect to each other. The distinction between the channels is implicit in the fields contained in the messages they carry; there are no explicit channel markers.
+
+The control channel carries a series of command/reply pairs, where each command specifies a `method` and each reply specifies an `error_code`. Commands always flow from client to server, and replies always flow from server to client. A client may pipeline commands — that is, the client need not wait to receive the reply for one command before transmitting another command. However, because the server may reorder replies to the client with respect to the order in which the client submitted the commands that elicited those replies, a pipelining client should specify a unique `tag` in each command, to which it should correlate the matching `tag` in the corresponding reply. The server executes all commands that alter the state of the system in the order in which it receives them, but it may reply to information requests ahead of commands that alter state. For example, pipelining an `EstimateMarketOrder` command after a `PlaceOrder` command may mean that the returned estimate does not reflect any order book changes that result from the placed order.
+
+The asynchronous notifications channel carries a series of notices, where each notice specifies a `notice` field. These notices may be delivered to the client at any time, and the timing of their delivery may not tightly correlate with command/reply messages in the control channel. For example, the `OrderOpened` notice that results from a `PlaceOrder` command may be delivered either before or after the command reply. However, notices are guaranteed to be delivered to the client in the same order as their respective events occurred in the trade engine. For example, an `OrdersMatched` notice that references a particular order will never be delivered _after_ an `OrderClosed` notice that references the same order.
 
 ---
 
@@ -47,7 +58,7 @@ Authenticates as a user by signing a challenge.
 
 `nonce` is a base64-encoded string of 16 bytes that have been randomly selected by the client.
 
-`signature` is an array containing two base64-encoded strings, which encode the *r* and *s* components of the signature.
+`signature` is an array containing two base64-encoded strings, which encode the *r* and *s* components of the signature. Please see [AUTH.md](AUTH.md) for details of the authentication scheme.
 
 ### Success Reply
 
@@ -305,7 +316,7 @@ Places an order to execute a specified trade. This command is used to place both
 `tag` is optional. Iff given and non-zero, it will be echoed in the reply.
 
 `tonce` is optional. If given, it must be non-zero, and it must be strictly greater than any tonce given in any successful `PlaceOrder` command previously issued by the authenticated user since the user last issued a `CancelAllOrders` command.
-The purpose of the tonce is to allow the user to resubmit a `PlaceOrder` command (e.g., after a connection failure) without risk of creating a duplicate order.
+The purpose of the tonce is to allow the user to resubmit a `PlaceOrder` command (e.g., after a connection failure) without risk of creating a duplicate order or to request cancellation of a just-placed order without needing to wait for the `PlaceOrder` reply containing the server-assigned order identifier.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
@@ -577,7 +588,7 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 # WatchOrders
 
 Subscribes/unsubscribes the requesting client to/from the orders feed of a specified order book.
-When subscribing, up to 2000 orders from the top of the book are returned in the response.
+When subscribing, up to 1000 bids and 1000 asks from the top of the book are returned in the response.
 
 **Authorization:** None required.
 
