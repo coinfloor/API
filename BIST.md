@@ -37,7 +37,7 @@ These endpoint URIs replace the https://www.bitstamp.net/api/ portion of Bitstam
 **N.B: All examples below use the XBT/GBP asset pair but this can be changed to the asset pair of choice.**
 
 
-##REQUEST LIMITS
+## REQUEST LIMITS
 
 Coinfloor's application programming interface (API) allows our clients to access and control their accounts or view our market data using custom-written software. To protect the performance of the system, we impose certain limits:
 
@@ -105,21 +105,20 @@ Returns descending JSON list of transactions. Every transaction (dictionary) con
 1. Coinfloor encodes the date field as an integer.
 
 
-##API AUTHENTICATION
+## API AUTHENTICATION
 All private API calls require authentication. You need to provide 3 parameters to authenticate a request:
 
 * User ID
 * API key
 * Passphrase
 
-
-####User ID
+#### User ID
 To get your User ID (sometimes referred to as a Core ID), go to the Dashboard
 
 #### API key
 To get your API key (referred to as a "Cookie" in the WebSocket API documentation), go to the Dashboard
 
-####Passphrase
+#### Passphrase
 Is the password you use to log into Coinfloor.
 
 **N.B:**
@@ -135,9 +134,9 @@ This is an example of how to make a balance request with curl:
 * ``User ID`` and ``API key`` are provided on your Coinfloor logged in Dashboard page.
 * ``Passphrase`` is your Coinfloor passphrase.
 
-##PRIVATE FUNCTIONS
+## PRIVATE FUNCTIONS
 
-####ACCOUNT BALANCE
+#### ACCOUNT BALANCE
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/balance/
 
 Params:
@@ -172,7 +171,7 @@ Returns JSON dictionary:
 2. Coinfloor does not include the fee field in the response.
 
 
-####USER TRANSACTIONS
+#### USER TRANSACTIONS
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/user_transactions/
 
 Params:
@@ -199,7 +198,7 @@ Returns descending JSON list of transactions. Every transaction (dictionary) con
 
 1. Bitstamp returns the quantity and total of each trade in the btc and usd fields, respectively, and returns the trade price in the (undocumented) btc_usd field. Coinfloor names these fields using currency codes xbt, eur, gbp, usd, and/or pln, depending on the specific API endpoint being accessed.
 
-####OPEN ORDERS
+#### OPEN ORDERS
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/open_orders/
 
 Params:
@@ -216,7 +215,7 @@ Returns JSON list of open orders. Each order is represented as dictionary:
 * price - price
 * amount - amount
 
-####CANCEL ORDER
+#### CANCEL ORDER
 
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/cancel_order/
 
@@ -235,7 +234,7 @@ Returns 'true' if order has been found and canceled.
 
 2. If the specified order was found and canceled, Coinfloor returns **true** with a Content-Type: text/plain header in this case.
 
-####BUY LIMIT ORDER
+#### BUY LIMIT ORDER
 
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy/
 
@@ -267,7 +266,7 @@ Returns JSON dictionary representing order:
 
 3. Coinfloor returns a datetime field with whole-second precision.
 
-####SELL LIMIT ORDER
+#### SELL LIMIT ORDER
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/sell/
 
 Params:
@@ -298,7 +297,7 @@ Returns JSON dictionary representing order:
 
 3. Coinfloor returns a datetime field with whole-second precision.
 
-####BUY MARKET ORDER
+#### BUY MARKET ORDER
 
 POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy_market/
 
