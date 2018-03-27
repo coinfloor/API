@@ -271,7 +271,7 @@ Simulates the execution of a market order and returns the quantity and total tha
 `error_code` | `error_msg`
 -------------|------------------------------------------------------------------
 1            | "You specified an invalid asset pair."
-6            | "You are making information requests too rapidly."
+6            | "You are sending orders too rapidly."
 8            | "Quantity must not be zero."
 8            | "Total must not be zero."
 8            | "You must specify either quantity or total for a market order."
@@ -551,7 +551,7 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
-`volume` is the user's 30-day trailing trade volume in the specifed asset.
+`volume` is the user's 30-day trailing trade volume in the specified asset.
 
 ### Error Reply
 

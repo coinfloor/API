@@ -12,7 +12,7 @@ The Web Layer and user bots authenticate to the proxy layer by sending an authen
 
 ### Protocol
 
-All communications with the Proxy Layer by clients are via the [WebSocket][IETF RFC 6455] protocol, version 13. WebSocket is a bidirectional, message-oriented protocol. The messages sent and received by the Proxy Layer are in [JSON][IETF RFC 6455] format. See the [API documentation][API] for the supported message types.
+All communications with the Proxy Layer by clients are via the [WebSocket][IETF RFC 6455] protocol, version 13. WebSocket is a bidirectional, message-oriented protocol. The messages sent and received by the Proxy Layer are in [JSON][IETF RFC 4627] format. See the [API documentation][API] for the supported message types.
 
 Authentication with the Proxy Layer is by a `Welcome` notification sent to the client and an `Authenticate` command sent by the client.
 

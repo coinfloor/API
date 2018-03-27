@@ -9,6 +9,6 @@ Coinfloor's application programming interface (API) allows our clients to access
 | Order placements*       | 1,000 per 1,000 seconds per user |
 | Information requests†   |    10 per 10 seconds per session |
 
-\* "Order placements" also include order cancellations.
+\* "Order placements" also include order cancellations and market order estimates.
 
-† "Information requests" include balance inquiries, open order listings, market order estimates, and trade volume inquiries.
+† "Information requests" include balance inquiries, open order listings, and trade volume inquiries.
