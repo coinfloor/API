@@ -13,6 +13,7 @@ Coinfloor has published [client libraries](https://github.com/coinfloor) for sev
 
 [WebSocket]: https://tools.ietf.org/html/rfc6455
 [Ping frame]: https://tools.ietf.org/html/rfc6455#section-5.5.2
+[scaled]: SCALE.md
 
 ---
 
@@ -118,7 +119,7 @@ Retrieves the available balances of the authenticated user.
 
 `asset` is an asset code for which a balance is given.
 
-`balance` is the user's available balance in the specified asset.
+`balance` is the user's [scaled][] available balance in the specified asset.
 
 ### Error Reply
 
@@ -186,9 +187,9 @@ Retrieves the open orders of the authenticated user.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
-`quantity` is the amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
+`quantity` is the [scaled][] amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
 
-`price` is the price at which the order offers to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the order offers to trade.
 
 `time` is the micro-timestamp at which the order was opened.
 
@@ -235,9 +236,9 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
-`quantity` is the amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `total` is supplied.
+`quantity` is the [scaled][] amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `total` is supplied.
 
-`total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `quantity` is omitted.
+`total` is the [scaled][] amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `quantity` is omitted.
 
 ### Success Reply
 
@@ -252,9 +253,9 @@ Simulates the execution of a market order and returns the quantity and total tha
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
-`quantity` is the amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
+`quantity` is the [scaled][] amount of the base asset that would have been traded if the market order really had been executed. It is always positive.
 
-`total` is the amount of the counter asset that would have been traded if the market order really had been executed. It is always positive.
+`total` is the [scaled][] amount of the counter asset that would have been traded if the market order really had been executed. It is always positive.
 
 ### Error Reply
 
@@ -308,11 +309,11 @@ The purpose of the tonce is to allow the user to resubmit a `PlaceOrder` command
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
-`quantity` is the amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `price` is supplied and must be omitted if `total` is supplied.
+`quantity` is the [scaled][] amount of base asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be supplied if `price` is supplied and must be omitted if `total` is supplied.
 
-`price` is the price at which the order offers to trade, scaled by a factor of 10000. It is optional; if omitted, the order will be executed as a market order.
+`price` is the [scaled][] price at which the order offers to trade. It is optional; if omitted, the order will be executed as a market order.
 
-`total` is the amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `price` is supplied and must be supplied if `quantity` is omitted.
+`total` is the [scaled][] amount of the counter asset that is to be traded. It is negative for a sell order and positive for a buy order. This field must be omitted if `price` is supplied and must be supplied if `quantity` is omitted.
 
 `persist` is optional. If **true** or omitted, the order will remain on the order book until canceled or fulfilled. If **false**, the order will be canceled automatically when the client disconnects. This flag has no effect on market orders.
 
@@ -340,7 +341,7 @@ omitted    | omitted  | supplied
 
 `time` is the micro-timestamp at which the order was opened. It is present only if `price` was supplied in the request.
 
-`remaining` is the amount of the base asset (if `quantity` was supplied in the request), or the amount of the counter asset (if `total` was supplied in the request), that could not be traded, either because insufficient liquidity existed on the order book or because the user's balance was exhausted. It is present only if `price` was omitted from the request.
+`remaining` is the [scaled][] amount of the base asset (if `quantity` was supplied in the request), or the [scaled][] amount of the counter asset (if `total` was supplied in the request), that could not be traded, either because insufficient liquidity existed on the order book or because the user's balance was exhausted. It is present only if `price` was omitted from the request.
 
 ### Error Reply
 
@@ -418,9 +419,9 @@ Cancels an open order belonging to the authenticated user.
 
 `base` and `counter` are the asset codes of the base and counter assets of the canceled order.
 
-`quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
+`quantity` is the [scaled][] amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
 
-`price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the canceled order had offered to trade.
 
 `time` is the micro-timestamp at which the order was opened.
 
@@ -493,9 +494,9 @@ Also resets the user's tonce counter to zero.
 
 `base` and `counter` are the asset codes of the base and counter assets of the canceled order.
 
-`quantity` is the amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
+`quantity` is the [scaled][] amount of the base asset that was remaining to be traded when the order was canceled. It is negative for a sell order and positive for a buy order.
 
-`price` is the price at which the canceled order had offered to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the canceled order had offered to trade.
 
 `time` is the micro-timestamp at which the order was opened.
 
@@ -551,7 +552,7 @@ Retrieves the 30-day trailing trade volume for the authenticated user.
 
 `tag` is present iff `tag` was given and non-zero in the request.
 
-`volume` is the user's 30-day trailing trade volume in the specified asset.
+`volume` is the user's 30-day trailing [scaled][] trade volume in the specified asset.
 
 ### Error Reply
 
@@ -622,9 +623,9 @@ When subscribing, up to 2000 orders from the top of the book are returned in the
 
 `id` is the numeric identifier of an order.
 
-`quantity` is the amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
+`quantity` is the [scaled][] amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
 
-`price` is the price at which the order offers to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the order offers to trade.
 
 `time` is the micro-timestamp at which the order was opened.
 
@@ -693,13 +694,13 @@ When subscribing, the current ticker values of the book are returned in the resp
 
 `last`, `bid`, `ask`, `low`, `high`, and `volume` are present iff `watch` was **true** in the request.
 
-`last` is the price at which the last trade in the specified order book executed, scaled by a factor of 10000, or **null** if no such trade has yet executed.
+`last` is the [scaled][] price at which the last trade in the specified order book executed, or **null** if no such trade has yet executed.
 
-`bid` and `ask` are the highest bid price and lowest ask price in the specified order book, respectively, scaled by a factor of 10000, or **null** if there is no such order.
+`bid` and `ask` are the highest [scaled][] bid price and lowest [scaled][] ask price in the specified order book, respectively, or **null** if there is no such order.
 
-`low` and `high` are the lowest and highest prices at which any trade executed in the specified order book in the trailing 24-hour period, scaled by a factor of 10000, or **null** if no such trade executed in that period.
+`low` and `high` are the lowest and highest [scaled][] prices at which any trade executed in the specified order book in the trailing 24-hour period, or **null** if no such trade executed in that period.
 
-`volume` is the quantity of the base asset that has been traded in the specified order book in the trailing 24-hour period.
+`volume` is the [scaled][] quantity of the base asset that has been traded in the specified order book in the trailing 24-hour period.
 
 ### Error Reply
 
@@ -740,7 +741,7 @@ One of the authenticated user's balances has changed.
 
 `asset` is the asset code of the balance that changed.
 
-`balance` is the user's new available balance in the specified asset.
+`balance` is the user's new [scaled][] available balance in the specified asset.
 
 ---
 
@@ -771,9 +772,9 @@ A new order has been opened.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
-`quantity` is the amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
+`quantity` is the [scaled][] amount of the base asset that is to be traded. It is negative for a sell order and positive for a buy order.
 
-`price` is the price at which the order offers to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the order offers to trade.
 
 `time` is the micro-timestamp at which the order was opened.
 
@@ -815,17 +816,17 @@ Two orders matched, resulting in a trade.
 
 `base` and `counter` are the asset codes of the base and counter assets of the orders.
 
-`quantity` is the amount of the base asset that was traded. It is always positive.
+`quantity` is the [scaled][] amount of the base asset that was traded. It is always positive.
 
-`price` is the price at which the trade executed, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the trade executed.
 
-`total` is the amount of the counter asset that was traded. It is always positive.
+`total` is the [scaled][] amount of the counter asset that was traded. It is always positive.
 
-`bid_rem` and `ask_rem` are the quantities remaining in the bid and ask orders, respectively, after the trade. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
+`bid_rem` and `ask_rem` are the [scaled][] quantities remaining in the bid and ask orders, respectively, after the trade. Either (but not both) may be omitted if the corresponding side of the trade was a market order.
 
 `time` is the micro-timestamp at which the trade executed.
 
-`bid_base_fee`, `bid_counter_fee`, `ask_base_fee`, and `ask_counter_fee` are the fees levied on the buyer and seller, respectively, in the base and counter assets, respectively. These fields are present only if the recipient of the notification is the buyer or seller, respectively.
+`bid_base_fee`, `bid_counter_fee`, `ask_base_fee`, and `ask_counter_fee` are the [scaled][] fees levied on the buyer and seller, respectively, in the base and counter assets, respectively. These fields are present only if the recipient of the notification is the buyer or seller, respectively.
 
 ---
 
@@ -855,9 +856,9 @@ An order was removed from the order book.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order.
 
-`quantity` is the amount of the base asset that was remaining to be traded when the order was closed. It is negative for a sell order and positive for a buy order. It is zero if the order was completely fulfilled.
+`quantity` is the [scaled][] amount of the base asset that was remaining to be traded when the order was closed. It is negative for a sell order and positive for a buy order. It is zero if the order was completely fulfilled.
 
-`price` is the price at which the order had offered to trade, scaled by a factor of 10000.
+`price` is the [scaled][] price at which the order had offered to trade.
 
 ---
 
@@ -885,10 +886,10 @@ The ticker for an order book changed.
 
 `base` and `counter` are the asset codes of the base and counter assets of the order book whose ticker changed.
 
-`last` is the price at which the last trade in the specified order book executed, scaled by a factor of 10000, or **null** if no such trade has yet executed. It is present only if it has changed since the previous notice in which it was present.
+`last` is the [scaled][] price at which the last trade in the specified order book executed, or **null** if no such trade has yet executed. It is present only if it has changed since the previous notice in which it was present.
 
-`bid` and `ask` are the highest bid price and lowest ask price in the specified order book, respectively, scaled by a factor of 10000, or **null** if there is no such order. Each is present only if it has changed since the previous notice in which it was present.
+`bid` and `ask` are the highest [scaled][] bid price and lowest [scaled][] ask price in the specified order book, respectively, or **null** if there is no such order. Each is present only if it has changed since the previous notice in which it was present.
 
-`low` and `high` are the lowest and highest prices at which any trade executed in the specified order book in the trailing 24-hour period, scaled by a factor of 10000, or **null** if no such trade executed in that period. Each is present only if it has changed since the previous notice in which it was present.
+`low` and `high` are the lowest and highest [scaled][] prices at which any trade executed in the specified order book in the trailing 24-hour period, or **null** if no such trade executed in that period. Each is present only if it has changed since the previous notice in which it was present.
 
-`volume` is the quantity of the base asset that has been traded in the specified order book in the trailing 24-hour period. It is present only if it has changed since the previous notice in which it was present.
+`volume` is the [scaled][] quantity of the base asset that has been traded in the specified order book in the trailing 24-hour period. It is present only if it has changed since the previous notice in which it was present.
