@@ -21,38 +21,26 @@
 
 ## WHAT IS THE BIST API?
 
-Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp HTTP API](https://www.bitstamp.net/api/). This document details the functionality, the most notable of which are related to Coinfloor's use of different currency codes.  A separate document focusses solely on what is required to [migrate code written for Bitstamp’s HTTP API to BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
+Coinfloor offers an API gateway called <u>BIST</u> that approximately emulates [Bitstamp's v1 HTTP API](https://www.bitstamp.net/api/). This following document is provided as a quick reference to this API. For complete details, please consult the documentation of Bitstamp's v1 HTTP API and our document detailing [the differences between Bitstamp's v1 HTTP API and BIST](https://github.com/coinfloor/API/blob/master/BIST-Migration.md).
 
-Because Coinfloor is a multi-currency exchange and Bitstamp is not, Coinfloor must emulate the entire Bitstamp API at multiple separate endpoints, one for each market that Coinfloor operates.
+Bitstamp was not a multi-currency exchange at the time this emulation layer was implemented. Because Coinfloor is a multi-currency exchange, Coinfloor emulates the entire Bitstamp v1 API at multiple separate endpoints, one for each market that Coinfloor operates.
 
 The Bitstamp-like API can be accessed at the following API endpoints:
 
-* https://webapi.coinfloor.co.uk:8090/bist/XBT/EUR/
-* https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/
-* https://webapi.coinfloor.co.uk:8090/bist/XBT/USD/
-* https://webapi.coinfloor.co.uk:8090/bist/XBT/PLN/
+* `https://webapi.coinfloor.co.uk:8090/bist/<base>/<counter>/`
+* `https://webapi.coinfloorex.com:8090/bist/<base>/<counter>/`
 
-These endpoint URIs replace the https://www.bitstamp.net/api/ portion of Bitstamp's URIs.
+`<base>` and `<counter>` are placeholders for asset codes listed in the "Asset Type" column of [SCALE.md](SCALE.md).
 
-**N.B: All examples below use the XBT/GBP asset pair but this can be changed to the asset pair of choice.**
+These endpoint URIs replace the `https://www.bitstamp.net/api/` portion of Bitstamp's URIs.
+
+**N.B: All examples below use the XBT/GBP asset pair on the Coinfloor UK platform, but this can be changed to the asset pair and platform of your choice.**
 
 
 ## REQUEST LIMITS
 
-Coinfloor's application programming interface (API) allows our clients to access and control their accounts or view our market data using custom-written software. To protect the performance of the system, we impose certain limits:
+Coinfloor's application programming interface (API) allows our clients to access and control their accounts or view our market data using custom-written software. To protect the performance of the system, we impose certain limits. See [LIMITS.md](LIMITS.md) for details.
 
-
-| Metric                  | Limit                            |
-|-------------------------|----------------------------------|
-| Open Orders             | 1,000 per user                   |
-| Authentication attempts | 1,000 per hour per user          |
-| Order placements*       | 1,000 per 1,000 seconds per user |
-| Information requests†   | 10 per 10 seconds per session    
-
-
-*"Order placements" also include order cancellations.
-
-† "Information requests" include balance inquiries, open order listings, market order estimates, and trade volume inquiries.
 
 ## PUBLIC DATA FUNCTIONS
 

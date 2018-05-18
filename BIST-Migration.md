@@ -1,15 +1,15 @@
 # Migrating from Bitstamp's API to Coinfloor's Bitstamp-like API
 
-Coinfloor offers an API gateway that approximately emulates [Bitstamp's HTTP API](https://www.bitstamp.net/api/). This document details the differences, the most notable of which are related to Coinfloor's use of different currency codes.
+Coinfloor offers an API gateway that approximately emulates [Bitstamp's v1 HTTP API](https://www.bitstamp.net/api/). This document details the differences, the most notable of which are related to Coinfloor's use of different currency codes.
 
-Because Coinfloor is a multi-currency exchange and Bitstamp is not, Coinfloor must emulate the entire Bitstamp API at multiple separate endpoints, one for each market that Coinfloor operates.
+Bitstamp was not a multi-currency exchange at the time this emulation layer was implemented. Because Coinfloor is a multi-currency exchange, Coinfloor emulates the entire Bitstamp v1 API at multiple separate endpoints, one for each market that Coinfloor operates.
 
 The Bitstamp-like API can be accessed at the following API endpoints:
 
-* `https://webapi.coinfloor.co.uk:8090/bist/XBT/EUR/`
-* `https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/`
-* `https://webapi.coinfloor.co.uk:8090/bist/XBT/USD/`
-* `https://webapi.coinfloor.co.uk:8090/bist/XBT/PLN/`
+* `https://webapi.coinfloor.co.uk:8090/bist/<base>/<counter>/`
+* `https://webapi.coinfloorex.com:8090/bist/<base>/<counter>/`
+
+`<base>` and `<counter>` are placeholders for asset codes listed in the "Asset Type" column of [SCALE.md](SCALE.md).
 
 These endpoint URIs replace the `https://www.bitstamp.net/api/` portion of Bitstamp's URIs.
 

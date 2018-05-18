@@ -1,7 +1,7 @@
 API
 ===
 
-Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][IETF RFC 6455] connection to `api.coinfloor.co.uk` on port 80 for unencrypted transport and port 443 for TLS transport. Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][IETF RFC 4627]-formatted payloads.
+Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][IETF RFC 6455] connection to `api.coinfloor.co.uk` for Coinfloor Exchange UK or `api.coinfloorex.com` for CoinfloorEX, on port 80 for unencrypted transport and port 443 for TLS transport. Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][IETF RFC 4627]-formatted payloads.
 
 WebSocket connections to the API will time out after 60 seconds of no traffic passing in either direction. To prevent timeouts, send a [Ping frame][] approximately every 45 seconds while the connection is otherwise idle. You do not need to send Ping frames if you are otherwise sending or receiving data frames on the socket.
 
