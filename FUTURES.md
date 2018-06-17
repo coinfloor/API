@@ -88,7 +88,7 @@ All method calls require [HTTP Basic authentication][]. The username portion of 
 
 ---
 
-## GET /borrower/events
+## `GET /borrower/events`
 
 Returns a stream of events pertaining to the user's borrowing activity.
 The response body is an indefinitely long document in [`text/event-stream`][EventSource] format.
@@ -135,7 +135,7 @@ Optionally, the Base64-encoded [HTTP Basic authentication][] string may be passe
 
 ---
 
-## GET /borrower/collateral/
+## `GET /borrower/collateral/`
 
 Returns the collateral available to the user in various assets.
 
@@ -152,7 +152,7 @@ Returns the collateral available to the user in various assets.
 
 ---
 
-## GET /borrower/collateral/<id>
+## `GET /borrower/collateral/<id>`
 
 Returns the collateral available to the user in the specified asset.
 
@@ -178,7 +178,7 @@ Returns the collateral available to the user in the specified asset.
 
 ---
 
-## GET /borrower/offers/
+## `GET /borrower/offers/`
 
 Returns the loan offers available to the user.
 
@@ -195,7 +195,7 @@ Returns the loan offers available to the user.
 
 ---
 
-## GET /borrower/offers/<id>
+## `GET /borrower/offers/<id>`
 
 Returns the specified loan offer.
 
@@ -226,7 +226,7 @@ Returns the specified loan offer.
 
 ---
 
-## GET /borrower/loans/
+## `GET /borrower/loans/`
 
 Returns the borrower's outstanding loans.
 
@@ -243,7 +243,7 @@ Returns the borrower's outstanding loans.
 
 ---
 
-## GET /borrower/loans/<id>
+## `GET /borrower/loans/<id>`
 
 Returns the borrower's specified outstanding loan.
 
@@ -274,7 +274,7 @@ Returns the borrower's specified outstanding loan.
 
 ---
 
-## POST /borrower/loans/
+## `POST /borrower/loans/`
 
 Initiates a loan.
 
@@ -314,7 +314,7 @@ The `Location` response header contains the numeric identifier of the newly init
 
 ---
 
-## POST /borrower/loans/<id>
+## `POST /borrower/loans/<id>`
 
 Partially repays an outstanding loan.
 
@@ -348,7 +348,7 @@ Partially repays an outstanding loan.
 
 ---
 
-## DELETE /borrower/loans/<id>
+## `DELETE /borrower/loans/<id>`
 
 Fully repays an outstanding loan.
 
