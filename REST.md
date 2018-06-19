@@ -6,11 +6,9 @@ For clients who do not wish to take advantage of Coinfloor's native [WebSocket A
 
 ## Authentication
 
-Requests to the REST API must authenticate using [HTTP Basic Authentication][], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password.
+Authenticated requests to the REST API use [HTTP Basic Authentication][], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password.
 
-## Market Data
-
-A facility to retrieve full order book listings is intentionally omitted from this API, as such facilities have a tendency to be abused through rapid polling. If you require order book listings, please use the [WebSocket API][], which delivers snapshots followed by incremental updates.
+The public market data methods do not require authentication.
 
 ---
 
@@ -46,6 +44,28 @@ A facility to retrieve full order book listings is intentionally omitted from th
 * **`price`:** *(integer)* The [scaled][] price at which the order offers to trade.
 * **`time`:** *(integer)* The micro-timestamp at which the order was opened.
 
+### `<ticker>`
+
+	{
+		"base": <integer>,
+		"counter": <integer>,
+		"last": <integer>|null,
+		"bid": <integer>|null,
+		"ask": <integer>|null,
+		"low": <integer>|null,
+		"high": <integer>|null,
+		"volume": <integer>
+	}
+
+* **`base`:** *(integer)* The numeric identifier of the base asset of the ticker.
+* **`counter`:** *(integer)* The numeric identifier of the counter asset of the ticker.
+* **`last`:** *(integer or `null`)* The [scaled][] price of the last trade in the identified market, or `null` if no trade has occurred in the identified market.
+* **`bid`:** *(integer or `null`)* The [scaled][] price of the highest-priced open bid order in the identified market, or `null` if no bid orders are open in the identified market.
+* **`ask`:** *(integer or `null`)* The [scaled][] price of the lowest-priced open ask order in the identified market, or `null` if no ask orders are open in the identified market.
+* **`low`:** *(integer or `null`)* The [scaled][] price of the lowest-priced trade in the identified market in the preceding 24-hour period, or `null` if no trade has occurred in the identified market in the preceding 24-hour period.
+* **`high`:** *(integer or `null`)* The [scaled][] price of the highest-priced trade in the identified market in the preceding 24-hour period, or `null` if no trade has occurred in the identified market in the preceding 24-hour period.
+* **`volume`:** *(integer)* The [scaled][] quantity of the base asset that has traded in the identified market in the preceding 24-hour period.
+
 ### `<trade>`
 
 	{
@@ -72,8 +92,89 @@ A facility to retrieve full order book listings is intentionally omitted from th
 
 ---
 
+## `GET /tickers/`
+
+**Authentication not required.**
+Returns the tickers of all available markets.
+
+### Request
+
+	GET /tickers/ HTTP/1.1
+
+### Response
+
+	HTTP/1.1 200 OK
+	Content-Type: application/json; charset=US-ASCII
+	
+	[<ticker>, …]
+
+---
+
+## `GET /tickers/<base>:<counter>`
+
+**Authentication not required.**
+Returns the ticker of the specified market.
+
+### Request
+
+	GET /tickers/<base>:<counter> HTTP/1.1
+
+* **`base`:** *(integer)* The numeric identifier of the base asset of the market whose ticker is to be returned.
+* **`counter`:** *(integer)* The numeric identifier of the counter asset of the market whose ticker is to be returned.
+
+### Response
+
+	HTTP/1.1 200 OK
+	Content-Type: application/json; charset=US-ASCII
+	
+	<ticker>
+
+### Errors
+
+* If the specified market was not found, then this method returns:
+
+		HTTP/1.1 404 Not Found
+
+---
+
+## `GET /depth/<base>:<counter>`
+
+**Authentication not required.**
+Returns the amount of open interest at each of the top 20 price levels on each side of the specified order book.
+
+A facility to retrieve full order book listings is intentionally omitted from this API, as such facilities have a tendency to be abused through rapid polling. If you require order book listings, please use the [WebSocket API][], which delivers snapshots followed by incremental updates.
+
+### Request
+
+	GET /depth/<base>:<counter>
+
+* **`base`:** *(integer)* The numeric identifier of the base asset of the market whose depth information is to be returned.
+* **`counter`:** *(integer)* The numeric identifier of the counter asset of the market whose depth information is to be returned.
+
+### Response
+
+	HTTP/1.1 200 OK
+	Content-Type: application/json; charset=US-ASCII
+	
+	{
+		"bids": [[<price>, <quantity>], …],
+		"asks": [[<price>, <quantity>], …]
+	}
+
+* **`price`:** *(integer)* The [scaled][] price level at which market depth is reported.
+* **`quantity`:** *(integer)* The [scaled][] amount of the base asset representing the total open interest at the specified price level.
+
+### Errors
+
+* If the specified market was not found, then this method returns:
+
+		HTTP/1.1 404 Not Found
+
+---
+
 ## `GET /balances/`
 
+**Authentication required.**
 Returns the user's available and reserved balances in all assets.
 
 ### Request
@@ -91,6 +192,7 @@ Returns the user's available and reserved balances in all assets.
 
 ## `GET /balances/<id>`
 
+**Authentication required.**
 Returns the user's available and reserved balances in the specified asset.
 
 ### Request
@@ -117,6 +219,7 @@ Returns the user's available and reserved balances in the specified asset.
 
 ## `GET /orders/`
 
+**Authentication required.**
 Returns the user's open limit orders.
 
 ### Request
@@ -134,6 +237,7 @@ Returns the user's open limit orders.
 
 ## `GET /orders/<id>`
 
+**Authentication required.**
 Returns the specified limit order of the user.
 
 ### Request
@@ -158,6 +262,7 @@ Returns the specified limit order of the user.
 
 ## `POST /orders/`
 
+**Authentication required.**
 Places a limit order or executes a market order.
 
 ### Request
@@ -205,6 +310,7 @@ The response for a market order (`price` omitted) is:
 
 ## `DELETE /orders/`
 
+**Authentication required.**
 Cancels all of the user's open limit orders.
 
 ### Request
@@ -224,6 +330,7 @@ The response contains a snapshot of all of the orders that were canceled.
 
 ## `DELETE /orders/<id>`
 
+**Authentication required.**
 Cancels the specified limit order of the user.
 
 ### Request
@@ -252,6 +359,7 @@ The response contains a snapshot of the order that was canceled.
 
 ## `GET /trades/`
 
+**Authentication required.**
 Returns historical records of the user's past trades.
 
 ### Request
@@ -274,6 +382,7 @@ Returns historical records of the user's past trades.
 
 ## `GET /trades/<time>`
 
+**Authentication required.**
 Returns the historical record of a particular past trade of the user.
 
 ### Request
