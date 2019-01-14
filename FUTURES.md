@@ -1,6 +1,6 @@
 # Futures API Specification
 
-**API endpoint URL: `https://webapi.coinfloorex.com:8090/`**
+**API endpoint URL: `https://webapi.coinfloorex.com/`**
 
 [scaled]: SCALE.md
 

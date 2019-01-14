@@ -1,8 +1,8 @@
 # Event Stream
 
-* https://webapi.coinfloor.co.uk:8090/event-stream
+* https://webapi.coinfloor.co.uk/event-stream
 	* Version 1
-* https://webapi.coinfloorex.com:8090/event-stream
+* https://webapi.coinfloorex.com/event-stream
 	* Version 2
 
 Coinfloor offers an Event Stream resource that complies with the [Server-Sent Events] specification by the W3C. This resource delivers a continuous, consistent stream of events related to market and account activity on the Coinfloor platform. It is offered as a simpler alternative to Coinfloor's [WebSocket API] for clients that do not require bidirectional communication with the platform.

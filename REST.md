@@ -1,6 +1,6 @@
 # REST API
 
-* https://webapi.coinfloorex.com:8090/
+* https://webapi.coinfloorex.com/
 
 For clients who do not wish to take advantage of Coinfloor's native [WebSocket API][], Coinfloor offers a RESTful API that implements much of the same functionality.
 

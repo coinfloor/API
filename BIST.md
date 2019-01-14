@@ -27,8 +27,8 @@ Bitstamp was not a multi-currency exchange at the time this emulation layer was 
 
 The Bitstamp-like API can be accessed at the following API endpoints:
 
-* `https://webapi.coinfloor.co.uk:8090/bist/<base>/<counter>/`
-* `https://webapi.coinfloorex.com:8090/bist/<base>/<counter>/`
+* `https://webapi.coinfloor.co.uk/bist/<base>/<counter>/`
+* `https://webapi.coinfloorex.com/bist/<base>/<counter>/`
 
 `<base>` and `<counter>` are placeholders for asset codes listed in the "Asset Type" column of [SCALE.md](SCALE.md).
 
@@ -45,7 +45,7 @@ Coinfloor's application programming interface (API) allows our clients to access
 ## PUBLIC DATA FUNCTIONS
 
 #### TICKER
-GET https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/ticker/
+GET https://webapi.coinfloor.co.uk/bist/XBT/GBP/ticker/
 
 Returns JSON dictionary:
 
@@ -64,7 +64,7 @@ Returns JSON dictionary:
 2. Coinfloor returns null for any ticker fields that are not populated, as may happen if no trade has occurred in the past 24 hours.
 
 #### ORDER BOOK
-GET https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/order_book/
+GET https://webapi.coinfloor.co.uk/bist/XBT/GBP/order_book/
 
 Returns JSON dictionary with "bids" and "asks". Each is a list of open orders and each order is represented as a list of price and amount.
 
@@ -75,7 +75,7 @@ Returns JSON dictionary with "bids" and "asks". Each is a list of open orders an
 
 
 #### TRANSACTIONS
-GET https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/transactions/
+GET https://webapi.coinfloor.co.uk/bist/XBT/GBP/transactions/
 
 Params:
 
@@ -117,7 +117,7 @@ Is the password you use to log into Coinfloor.
 
 This is an example of how to make a balance request with curl:
 
-> ``curl -k -u '[User ID]/[API key]:[Passphrase]' https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/balance/``
+> ``curl -k -u '[User ID]/[API key]:[Passphrase]' https://webapi.coinfloor.co.uk/bist/XBT/GBP/balance/``
 
 * ``User ID`` and ``API key`` are provided on your Coinfloor logged in Dashboard page.
 * ``Passphrase`` is your Coinfloor passphrase.
@@ -125,7 +125,7 @@ This is an example of how to make a balance request with curl:
 ## PRIVATE FUNCTIONS
 
 #### ACCOUNT BALANCE
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/balance/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/balance/
 
 Params:
 
@@ -160,7 +160,7 @@ Returns JSON dictionary:
 
 
 #### USER TRANSACTIONS
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/user_transactions/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/user_transactions/
 
 Params:
 
@@ -187,7 +187,7 @@ Returns descending JSON list of transactions. Every transaction (dictionary) con
 1. Bitstamp returns the quantity and total of each trade in the btc and usd fields, respectively, and returns the trade price in the (undocumented) btc_usd field. Coinfloor names these fields using currency codes xbt, eur, gbp, usd, and/or pln, depending on the specific API endpoint being accessed.
 
 #### OPEN ORDERS
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/open_orders/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/open_orders/
 
 Params:
 
@@ -205,7 +205,7 @@ Returns JSON list of open orders. Each order is represented as dictionary:
 
 #### CANCEL ORDER
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/cancel_order/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/cancel_order/
 
 Params:
 
@@ -224,7 +224,7 @@ Returns 'true' if order has been found and canceled.
 
 #### BUY LIMIT ORDER
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/buy/
 
 Params:
 
@@ -255,7 +255,7 @@ Returns JSON dictionary representing order:
 3. Coinfloor returns a datetime field with whole-second precision.
 
 #### SELL LIMIT ORDER
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/sell/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/sell/
 
 Params:
 
@@ -287,7 +287,7 @@ Returns JSON dictionary representing order:
 
 #### BUY MARKET ORDER
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/buy_market/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/buy_market/
 
 Params:
 
@@ -301,7 +301,7 @@ Returns JSON dictionary representing order:
 
 #### SELL MARKET ORDER 
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/sell_market/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/sell_market/
 
 Params:
 
@@ -315,7 +315,7 @@ Returns JSON dictionary representing order:
 
 #### ESTIMATE BUY MARKET ORDER
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/estimate_buy_market/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/estimate_buy_market/
 
 Params:
 
@@ -330,7 +330,7 @@ Returns JSON dictionary representing estimate:
 
 #### ESTIMATE SELL MARKET ORDER
 
-POST https://webapi.coinfloor.co.uk:8090/bist/XBT/GBP/estimate_sell_market/
+POST https://webapi.coinfloor.co.uk/bist/XBT/GBP/estimate_sell_market/
 
 Params:
 
