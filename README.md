@@ -5,7 +5,6 @@ Coinfloor's application programming interfaces (APIs) provide our clients progra
 Coinfloor provides several APIs:
 
 * our native [WebSocket API][]
-* a [RESTful API](REST.md)
 * an [Event Stream resource](EventStream.md)
 * a [Bitstamp Emulation API](BIST.md) (not recommended for new projects)
 
@@ -32,9 +31,6 @@ The [WebSocket API][] is accessible via [WebSocket][] connection to the followin
 ```text
 ws://api.coinfloor.co.uk/ (unencrypted)
 wss://api.coinfloor.co.uk/ (encrypted)
-
-ws://api.coinfloorex.com/ (unencrypted)
-wss://api.coinfloorex.com/ (encrypted)
 ```
 
 Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][]-formatted payloads.
