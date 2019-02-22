@@ -28,7 +28,6 @@ Bitstamp was not a multi-currency exchange at the time this emulation layer was 
 The Bitstamp-like API can be accessed at the following API endpoints:
 
 * `https://webapi.coinfloor.co.uk/bist/<base>/<counter>/`
-* `https://webapi.coinfloorex.com/bist/<base>/<counter>/`
 
 `<base>` and `<counter>` are placeholders for asset codes listed in the "Asset Type" column of [SCALE.md](SCALE.md).
 
