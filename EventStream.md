@@ -1,9 +1,6 @@
 # Event Stream
 
 * https://webapi.coinfloor.co.uk/event-stream
-	* Version 1
-* https://webapi.coinfloorex.com/event-stream
-	* Version 2
 
 Coinfloor offers an Event Stream resource that complies with the [Server-Sent Events] specification by the W3C. This resource delivers a continuous, consistent stream of events related to market and account activity on the Coinfloor platform. It is offered as a simpler alternative to Coinfloor's [WebSocket API] for clients that do not require bidirectional communication with the platform.
 
@@ -11,15 +8,12 @@ The Event Stream resource supports the standard `Last-Event-ID` request header t
 
 ## Authentication
 
-**[[ Version 2:** The Event Stream resource may be requested without authentication, in which case only public events (order book and ticker changes) are returned. **]]**
-
-Requests for the Event Stream resource **[[ Version 1:** must **]] [[ Version 2:** may **]]** authenticate using [HTTP Basic Authentication], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password. Authenticated requests will receive account-private events (balance changes and more details on the user's own order events) in addition to the public events.
+Requests for the Event Stream resource must authenticate using [HTTP Basic Authentication], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password. Authenticated requests will receive account-private events (balance changes and more details on the user's own order events) in addition to the public events.
 
 ---
 
 ## BalanceChanged
 
-**[[ Version 1:**
 ```
 event: BalanceChanged
 data: {
@@ -27,23 +21,9 @@ data:   "asset": <integer>,
 data:   "balance": <integer>
 data: }
 ```
-**]]**
-
-**[[ Version 2:**
-```
-event: BalanceChanged
-data: {
-data:   "asset": <integer>,
-data:   "available": <integer>,
-data:   "reserved": <integer>
-data: }
-```
-**]]**
 
 * **`asset`:** *(integer)* The numeric identifier of the asset whose available balance in the user's account changed.
-* **[[ Version 1: `balance` ]] [[ Version 2: `available` ]]:** *(integer)* The [scaled] available amount of the specified asset in the user's account.
-* **[[ Version 2: `reserved`:** *(integer)* The [scaled] reserved amount of the specified asset in the user's account. **]]**
-
+* **`balance`:** *(integer)* The [scaled] available amount of the specified asset in the user's account.
 ---
 
 ## OrderOpened
@@ -166,22 +146,6 @@ data: }
 
 ---
 
-**[[ Version 2:**
-
-## UserTradeVolumeChanged
-
-```
-event: UserTradeVolumeChanged
-data: {
-data:   "asset": <integer>,
-data:   "volume": <integer>
-data: }
-```
-
-* **`asset`:** *(integer)* The numeric identifier of the asset whose trailing 30-day user trade volume has changed.
-* **`volume`:** *(integer)* The [scaled] amount of the user's trailing 30-day trade volume in the specified asset.
-
-**]]**
 
 
 [HTTP Basic Authentication]: https://tools.ietf.org/html/rfc7617
