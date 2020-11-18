@@ -907,3 +907,25 @@ The ticker for an order book changed.
 `low` and `high` are the lowest and highest [scaled][] prices at which any trade executed in the specified order book in the trailing 24-hour period, or **null** if no such trade executed in that period. Each is present only if it has changed since the previous notice in which it was present.
 
 `volume` is the [scaled][] quantity of the base asset that has been traded in the specified order book in the trailing 24-hour period. It is present only if it has changed since the previous notice in which it was present.
+
+---
+
+# TradeVolumeChanged
+
+A 30-day trailing trade volume for the authenticated user changed.
+
+**Recipients:** Authenticated users receive notice of changes to their own trade volumes.
+
+### Notification
+
+```json
+	{
+		"notice": "TradeVolumeChanged",
+		"asset": <integer>,
+		"volume": <integer>
+	}
+```
+
+`asset` is the asset code of the asset whose 30-day trailing trade volume changed.
+
+`volume` is the user's updated 30-day trailing trade volume in the specified asset.
