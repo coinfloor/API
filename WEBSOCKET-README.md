@@ -928,4 +928,4 @@ A 30-day trailing trade volume for the authenticated user changed.
 
 `asset` is the asset code of the asset whose 30-day trailing trade volume changed.
 
-`volume` is the user's updated 30-day trailing trade volume in the specified asset.
+`volume` is the user's updated 30-day trailing [scaled][] trade volume in the specified asset.
