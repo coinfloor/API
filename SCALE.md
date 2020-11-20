@@ -5,12 +5,13 @@
 
 Asset quantities and totals transmitted via the Coinfloor API are encoded as integers with an implicit scale factor that depends on the particular asset type.
 
-| Asset Type | ID (Hex) | ID (Dec) | Scale Factor |  Atomic Unit |
-|:----------:|---------:|---------:|-------------:|-------------:|
-|     XBT    |   0xF800 |    63488 |        10000 |      Ƀ0.0001 |
-|     ETH    |   0xF820 |    63520 |        10000 |      Ξ0.0001 |
-|     EUR    |   0xFA00 |    64000 |          100 |        €0.01 |
-|     GBP    |   0xFA20 |    64032 |          100 |        £0.01 |
+| Asset Type | ID (Hex) | ID (Dec) | Scale Factor                   |  Atomic Unit |
+|:----------:|---------:|---------:|-------------------------------:|-------------:|
+|     XBT    |   0xF800 |    63488 |**[[ Version 1:** 10000 **]]**  | Ƀ0.0001      |
+|            |          |          |**[[ Version 2:** 100000000 **]]**  |          |
+|     ETH    |   0xF820 |    63520 |        10000                   |      Ξ0.0001 |
+|     EUR    |   0xFA00 |    64000 |          100                   |        €0.01 |
+|     GBP    |   0xFA20 |    64032 |          100                   |        £0.01 |
 
 ### Examples
 
