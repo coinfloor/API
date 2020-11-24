@@ -5,8 +5,11 @@ Coinfloor's application programming interfaces (APIs) provide our clients progra
 Coinfloor provides several APIs:
 
 * our native [WebSocket API][]
-* an [Event Stream resource](EventStream.md)
-* a [Bitstamp Emulation API](BIST.md) (not recommended for new projects)
+* an <u> [Event Stream resource](EventStream.md)</u>
+   
+* a <u>Bitstamp Emulation API</u> (not recommended for new projects)
+    * [Version 1](BIST.md)
+    * [Version 2](BIST_v2.md)
 
 Using these interfaces, it is possible to make both authenticated and unauthenticated API calls.
 
