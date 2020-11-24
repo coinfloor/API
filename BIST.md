@@ -10,9 +10,9 @@ Please Note: Coinfloor BIST API Version 2 [can be found here](BIST_v2.md)
       - [ORDER BOOK](#order-book)
       - [TRANSACTIONS](#transactions)
   - [API AUTHENTICATION](#api-authentication)
-      - [User ID](#user-id)
-      - [API key](#api-key)
-      - [Passphrase](#passphrase)
+      - [USER ID](#user-id)
+      - [API KEY](#api-key)
+      - [PASSPHRASE](#passphrase)
   - [PRIVATE FUNCTIONS](#private-functions)
       - [ACCOUNT BALANCE](#account-balance)
       - [USER TRANSACTIONS](#user-transactions)
@@ -105,13 +105,13 @@ All private API calls require authentication. You need to provide 3 parameters t
 * API key
 * Passphrase
 
-#### User ID
+#### USER ID
 To get your User ID (sometimes referred to as a Core ID), go to the Dashboard
 
-#### API key
+#### API KEY
 To get your API key (referred to as a "Cookie" in the WebSocket API documentation), go to the Dashboard
 
-#### Passphrase
+#### PASSPHRASE
 Is the password you use to log into Coinfloor.
 
 **N.B:**

@@ -12,9 +12,9 @@ Please Note: Coinfloor BIST API Version 1 [can be found here](BIST.md)
       - [ESTIMATE BUY MARKET ORDER](#estimate-buy-market-order)
       - [ESTIMATE SELL MARKET ORDER](#estimate-sell-market-order)
   - [API AUTHENTICATION](#api-authentication)
-      - [User ID](#user-id)
-      - [API key](#api-key)
-      - [Passphrase](#passphrase)
+      - [USER ID](#user-id)
+      - [API KEY](#api-key)
+      - [PASSPHRASE](#passphrase)
   - [PRIVATE FUNCTIONS](#private-functions)
       - [ACCOUNT BALANCE](#account-balance)
       - [USER TRANSACTIONS](#user-transactions)
@@ -118,13 +118,13 @@ All private API calls require authentication. You need to provide 3 parameters t
 * API key
 * Passphrase
 
-#### User ID
+#### USER ID
 To get your User ID (sometimes referred to as a Core ID), go to the Dashboard
 
-#### API key
+#### API KEY
 To get your API key (referred to as a "Cookie" in the WebSocket API documentation), go to the Dashboard
 
-#### Passphrase
+#### PASSPHRASE
 Is the password you use to log into Coinfloor.
 
 **N.B:**
