@@ -32,7 +32,7 @@ Coinfloor has published [client libraries][] for several popular languages to ai
 The [WebSocket API][] is accessible via [WebSocket][] connection to the following URLs:
 
 ```text
-wss://api.coinfloor.co.uk/ (encrypted)
+wss://apiv2.coinfloor.co.uk/ (encrypted)
 ```
 
 Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][]-formatted payloads.
