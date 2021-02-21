@@ -2,7 +2,10 @@ API
 ===
 
 * Coinfloor Exchange UK
-	* `wss://api.coinfloor.co.uk/`
+	* Version 2
+		* `wss://apiv2.coinfloor.co.uk/`
+	* Version 1 (Read Only)
+		* `wss://api.coinfloor.co.uk/`
 
 Coinfloor's application programming interface (API) provides our clients programmatic access to control aspects of their accounts and to place orders on the Coinfloor trading platform. The API is accessible via [WebSocket][IETF RFC 6455] connection to the URIs listed above. Commands, replies, and notifications traverse the WebSocket in text frames with [JSON][IETF RFC 4627]-formatted payloads.
 
