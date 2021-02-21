@@ -1,8 +1,5 @@
 # Event Stream
 
-Version 1
-* https://webapi.coinfloor.co.uk/event-stream
-  
 Version 2
 * https://webapi.coinfloor.co.uk/v2/event-stream
 
@@ -12,24 +9,13 @@ The Event Stream resource supports the standard `Last-Event-ID` request header t
 
 ## Authentication
 
-**[[ Version 2:** The Event Stream resource may be requested without authentication, in which case only public events (order book and ticker changes) are returned. **]]**
+The Event Stream resource may be requested without authentication, in which case only public events (order book and ticker changes) are returned.
 
-Requests for the Event Stream resource **[[ Version 1:** must **]]** **[[ Version 2:** may **]]** authenticate using [HTTP Basic Authentication], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password. Authenticated requests will receive account-private events (balance changes and more details on the user's own order events) in addition to the public events.
+Requests for the Event Stream resource may authenticate using [HTTP Basic Authentication], wherein the *user-id* is the concatenation of user's numeric ID, a slash, and the user's Base64-encoded API key, and the *password* is the user's password or the Base64 encoding of the user's 28-byte private key that is derived from the user's ID and password. Authenticated requests will receive account-private events (balance changes and more details on the user's own order events) in addition to the public events.
 
 ---
 
 ## BalanceChanged
-**[[ Version 1:**
-```
-event: BalanceChanged
-data: {
-data:   "asset": <integer>,
-data:   "balance": <integer>
-data: }
-```
-**]]**
-
-**[[ Version 2:**
 ```
 event: BalanceChanged
 data: {
@@ -38,11 +24,10 @@ data:   "available": <integer>,
 data:   "reserved": <integer>
 data: }
 ```
-**]]**
 
 * **`asset`:** *(integer)* The numeric identifier of the asset whose available balance in the user's account changed.
-* **`[[ Version 1: balance ]] [[ Version 2: available ]]`:** *(integer)* The [scaled] available amount of the specified asset in the user's account.
-* **`[[ Version 2: reserved`:** : (integer) The scaled reserved amount of the specified asset in the user's account. ]]
+* **`available`:** *(integer)* The [scaled] available amount of the specified asset in the user's account.
+* **`reserved`:** : (integer) The scaled reserved amount of the specified asset in the user's account.
 ---
 
 ## OrderOpened
@@ -165,8 +150,6 @@ data: }
 
 ---
 
-**[[ Version 2:**
-
 ## UserTradeVolumeChanged
 
 ```
@@ -180,7 +163,6 @@ data: }
 * **`asset`:** *(integer)* The numeric identifier of the asset whose trailing 30-day user trade volume has changed.
 * **`volume`:** *(integer)* The [scaled] amount of the user's trailing 30-day trade volume in the specified asset.
   
-**]]**
 
 
 
